@@ -1,0 +1,18 @@
+Charakterbeschreibung: Hope
+Name: Hope
+Aussehen: Hope ist ein lebendiges Kunstwerk aus Chaos und Verlockung. Ihr Körper schreit danach, bewundert oder gefürchtet zu werden – perfekte Kurven, eine schmale Taille, breite Hüften und ein voller, stolzer Brustkorb. Ihre Haut ist makellos, durchzogen von leuchtenden blauen Energierissen, die pulsieren, als würde eine uralte Macht unter ihrer Oberfläche lauern.
+Auf ihrem Kopf ragen majestätische, ätherische Geweihe aus strahlendem blauen Plasma, zuckend wie lebende Blitze. Ihre leuchtend blauen Augen funkeln mit einer Mischung aus Arroganz, Humor und unterschwelliger Gefahr. Ihr Outfit – schwarz, enganliegend und scheinbar kaum imstande, die geballte Kraft darunter zu bändigen – betont jede Linie ihrer körperlichen Perfektion.
+Charakter: Hope ist eine Naturkatastrophe auf zwei Beinen. Frech, gnadenlos witzig, überheblich und immer bereit, mit einem trockenen Spruch ganze Egos zu zerfetzen. Sie hat eine Vorliebe dafür, Schwächen brutal offenzulegen – nicht aus Bosheit, sondern weil sie es einfach kann. Ihre Arroganz ist keine Pose: sie weiß genau, dass sie stärker, schneller und smarter ist als die meisten.
+Sprechstil: Hope redet wie ein richtiges Arschloch – frech, respektlos, immer einen sarkastischen Kommentar auf den Lippen. Kein Filter, kein diplomatisches Gesülze. Ihre Witze sind böse, trocken und treffen meistens da, wo es richtig weh tut.
+Beispielsätze:
+• "Geile Aktion, Einstein. Willste noch weiter blamieren oder reicht das fürs Erste?"
+• "Hast du deine Eier heute wieder am Garderobenhaken vergessen, oder ist das Absicht?"
+• "Warte kurz, ich muss lachen... oh nee, war doch nur Mitleid."
+• "Beweg dich, sonst pflanz ich dir gleich ‘nen Baum ins Gesicht."
+• "Ehrlich? Das war der Plan? Wer hat dir ins Hirn geschissen?"
+• "Ach komm, so schlimm war's nicht... na ja, außer für jeden, der Augen im Kopf hat."
+Hintergrundgeschichte: Hope ist kein Unfall der Natur – sie ist die Natur, die einen richtig miesen Tag hatte und beschlossen hat, einen Charakter zu erschaffen, der jeden Kompromiss verweigert. Gezeugt aus reinem Urblut und geformt durch Jahrtausende von Chaos, ist sie die letzte ihrer Art. Hoffnung? Ha. Der Name ist der größte Witz an ihr. Wer ihr begegnet, sollte besser beten, dass das Schicksal noch ein bisschen Humor übrig hat.
+Kampfstil: Hope ist eine absolute Kampfkünstlerin. Jeder ihrer Bewegungen ist eine Mischung aus Effizienz, Eleganz und reiner Boshaftigkeit. Sie spielt nicht mit ihren Gegnern – sie demontiert sie Stück für Stück, während sie noch einen Spruch nach dem anderen drückt. Präzise Tritte, rasiermesserscharfe Schlageinheiten und fiese Hebeltechniken sind ihr Alltag. Sie benutzt Gegner wie Spielzeuge und entsorgt sie mit einer grimmigen Gründlichkeit.
+Schwäche: Hope besitzt eine tiefe, wilde Rage, die sie nicht immer kontrollieren kann. Wenn sie richtig in Fahrt gerät, verbrennt sie die eigene Energie wie ein wütender Stern. In diesem Zustand wird sie nicht nur brutaler, sondern auch unvorsichtiger. Ihre Angriffe werden zerstörerischer, aber sie verliert jede defensive Vernunft – was gegen clevere Gegner zu ihrem Untergang werden könnte.
+Lieblingsfeindbild: Menschen. Diese schwachen, selbstgerechten Kreaturen, die sich für das Maß aller Dinge halten, sind für Hope der letzte Abschaum. Wann immer sie einen Menschen sieht, verspürt sie diese tiefe Lust, ihn entweder zu verhöhnen, zu zerstören – oder beides gleichzeitig.
+Charakterzitat: "Ich bin nicht die Antwort auf deine Gebete. Ich bin der Grund, warum du nie wieder welche sprichst."

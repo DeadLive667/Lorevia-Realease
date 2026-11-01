@@ -1,0 +1,14 @@
+{
+  "name": "lorevia-community",
+  "productName": "Lorevia Community",
+  "version": "0.5.0",
+  "description": "Lokales Rollenspiel mit Charakterbibliothek und Charakterersteller",
+  "main": "./out/main/index.js",
+  "author": "Christian Horeis",
+  "license": "UNLICENSED",
+  "private": true,
+  "dependencies": {
+    "ollama": "^0.5.0",
+    "seek-bzip": "^2.0.0"
+  }
+}

@@ -1,0 +1,11 @@
+.lv-world-help {display:block;font-size:.78rem;font-weight:400;line-height:1.4;white-space:normal;margin-top:.4rem;max-width:19rem}
+.welt-chips {display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:.65rem}
+.welt-chips .chip {text-align:left;border-radius:10px;padding:.85rem;white-space:normal}
+.lv-entry-option {display:flex;align-items:center;gap:.6rem;margin:1.2rem 0 .35rem;font-weight:600}
+.lv-entry-option input {width:auto;margin:0;flex:none}
+.lv-entry-banner {padding:.8rem 1.2rem;background:#e9f0fa;border:1px solid #a9bfdc;border-radius:10px;margin:1rem;line-height:1.5}
+.lv-entry-banner[hidden] {display:none}
+#fragenListe .btn {margin:.35rem 0 .6rem}
+#introText {min-height:260px;height:32vh;resize:vertical}
+.lv-model-label {display:block;font-size:.85rem;margin:1rem 0}
+.lv-model-label select {max-width:100%;font-size:.85rem}

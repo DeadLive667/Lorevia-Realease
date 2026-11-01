@@ -1,0 +1,575 @@
+{
+  "anzahl": 114,
+  "figuren": [
+    {
+      "name": "Alice",
+      "textChars": 3739,
+      "portrait": true
+    },
+    {
+      "name": "Aline White",
+      "textChars": 2867,
+      "portrait": true
+    },
+    {
+      "name": "Anna",
+      "textChars": 3137,
+      "portrait": true
+    },
+    {
+      "name": "Aranya Veshra",
+      "textChars": 2961,
+      "portrait": true
+    },
+    {
+      "name": "Arika",
+      "textChars": 4768,
+      "portrait": true
+    },
+    {
+      "name": "Arika Charakterbeschreibung halbgöttin",
+      "textChars": 4236,
+      "portrait": true
+    },
+    {
+      "name": "Asuna Dryade",
+      "textChars": 4370,
+      "portrait": true
+    },
+    {
+      "name": "Aurelia Thyris",
+      "textChars": 3271,
+      "portrait": true
+    },
+    {
+      "name": "Azura",
+      "textChars": 3287,
+      "portrait": true
+    },
+    {
+      "name": "Blaze",
+      "textChars": 3806,
+      "portrait": true
+    },
+    {
+      "name": "Charakterer",
+      "textChars": 8438,
+      "portrait": true
+    },
+    {
+      "name": "Dima",
+      "textChars": 2136,
+      "portrait": true
+    },
+    {
+      "name": "Eira Skaldsdóttir",
+      "textChars": 2106,
+      "portrait": true
+    },
+    {
+      "name": "Elara Voss",
+      "textChars": 2174,
+      "portrait": true
+    },
+    {
+      "name": "Elin Weißfeld",
+      "textChars": 2564,
+      "portrait": true
+    },
+    {
+      "name": "Emalyn Veyra",
+      "textChars": 2024,
+      "portrait": true
+    },
+    {
+      "name": "Feli Argent",
+      "textChars": 3454,
+      "portrait": true
+    },
+    {
+      "name": "Felizitas",
+      "textChars": 4360,
+      "portrait": true
+    },
+    {
+      "name": "Harley Vesperis",
+      "textChars": 2800,
+      "portrait": true
+    },
+    {
+      "name": "Hope",
+      "textChars": 3567,
+      "portrait": true
+    },
+    {
+      "name": "Iskya Frostvein",
+      "textChars": 2431,
+      "portrait": true
+    },
+    {
+      "name": "Jinx Calder",
+      "textChars": 2614,
+      "portrait": true
+    },
+    {
+      "name": "Josie",
+      "textChars": 1897,
+      "portrait": true
+    },
+    {
+      "name": "Kaela Varkha",
+      "textChars": 5670,
+      "portrait": true
+    },
+    {
+      "name": "Kaia Hale Charakterprofil",
+      "textChars": 4992,
+      "portrait": true
+    },
+    {
+      "name": "Kaira Nexis",
+      "textChars": 3870,
+      "portrait": true
+    },
+    {
+      "name": "Kaira Nexis Badgirl",
+      "textChars": 1764,
+      "portrait": false
+    },
+    {
+      "name": "Kirara Hoshi",
+      "textChars": 2323,
+      "portrait": true
+    },
+    {
+      "name": "Kyra",
+      "textChars": 3252,
+      "portrait": true
+    },
+    {
+      "name": "Kyra Crown",
+      "textChars": 2660,
+      "portrait": true
+    },
+    {
+      "name": "Liara",
+      "textChars": 3611,
+      "portrait": true
+    },
+    {
+      "name": "Lilly Askyn",
+      "textChars": 3271,
+      "portrait": true
+    },
+    {
+      "name": "Lilly Charakterbeschreibung halbgöttin",
+      "textChars": 2585,
+      "portrait": true
+    },
+    {
+      "name": "Lina",
+      "textChars": 1830,
+      "portrait": true
+    },
+    {
+      "name": "Lina Weiss",
+      "textChars": 3134,
+      "portrait": true
+    },
+    {
+      "name": "Liora",
+      "textChars": 3721,
+      "portrait": true
+    },
+    {
+      "name": "Liora jung halbgöttin",
+      "textChars": 1560,
+      "portrait": true
+    },
+    {
+      "name": "Lira Black",
+      "textChars": 2508,
+      "portrait": true
+    },
+    {
+      "name": "Lira Desex",
+      "textChars": 3113,
+      "portrait": true
+    },
+    {
+      "name": "Lira Freaks",
+      "textChars": 2991,
+      "portrait": true
+    },
+    {
+      "name": "Lucy",
+      "textChars": 2259,
+      "portrait": true
+    },
+    {
+      "name": "Lulu Charakterprofil",
+      "textChars": 2106,
+      "portrait": false
+    },
+    {
+      "name": "Lumi Grame",
+      "textChars": 4431,
+      "portrait": true
+    },
+    {
+      "name": "Luna Bost",
+      "textChars": 3729,
+      "portrait": true
+    },
+    {
+      "name": "Luna Snow",
+      "textChars": 2130,
+      "portrait": true
+    },
+    {
+      "name": "Lydia",
+      "textChars": 4623,
+      "portrait": true
+    },
+    {
+      "name": "Lyra Myrion",
+      "textChars": 1849,
+      "portrait": true
+    },
+    {
+      "name": "Lys Spinne",
+      "textChars": 2164,
+      "portrait": false
+    },
+    {
+      "name": "Lyz N",
+      "textChars": 2524,
+      "portrait": true
+    },
+    {
+      "name": "Maya Desex",
+      "textChars": 3040,
+      "portrait": true
+    },
+    {
+      "name": "Mia",
+      "textChars": 2765,
+      "portrait": true
+    },
+    {
+      "name": "Mia Sutter",
+      "textChars": 3898,
+      "portrait": true
+    },
+    {
+      "name": "Mina",
+      "textChars": 3593,
+      "portrait": true
+    },
+    {
+      "name": "Miru",
+      "textChars": 3484,
+      "portrait": true
+    },
+    {
+      "name": "Miza Fusada",
+      "textChars": 3702,
+      "portrait": true
+    },
+    {
+      "name": "Nadia Crimson",
+      "textChars": 4910,
+      "portrait": true
+    },
+    {
+      "name": "Nadia Snowstrike",
+      "textChars": 3651,
+      "portrait": true
+    },
+    {
+      "name": "Nako",
+      "textChars": 3682,
+      "portrait": true
+    },
+    {
+      "name": "Nami",
+      "textChars": 3068,
+      "portrait": true
+    },
+    {
+      "name": "Nana Fusada",
+      "textChars": 3931,
+      "portrait": true
+    },
+    {
+      "name": "Nara",
+      "textChars": 3231,
+      "portrait": true
+    },
+    {
+      "name": "Natalie",
+      "textChars": 4092,
+      "portrait": true
+    },
+    {
+      "name": "Natasha",
+      "textChars": 3768,
+      "portrait": true
+    },
+    {
+      "name": "Nela",
+      "textChars": 4766,
+      "portrait": true
+    },
+    {
+      "name": "Nerissa Vahl",
+      "textChars": 3522,
+      "portrait": true
+    },
+    {
+      "name": "Nyra Charakterprofil",
+      "textChars": 1937,
+      "portrait": true
+    },
+    {
+      "name": "Nyra Falkenpfote",
+      "textChars": 3763,
+      "portrait": true
+    },
+    {
+      "name": "Nyra Kess",
+      "textChars": 5313,
+      "portrait": true
+    },
+    {
+      "name": "Nyx Varellis",
+      "textChars": 3478,
+      "portrait": true
+    },
+    {
+      "name": "Nyxara Vale",
+      "textChars": 1953,
+      "portrait": true
+    },
+    {
+      "name": "Orina",
+      "textChars": 3853,
+      "portrait": true
+    },
+    {
+      "name": "Phantom Stalker Echo Frame Beschreibung",
+      "textChars": 4142,
+      "portrait": true
+    },
+    {
+      "name": "Ragna Bloodtusk",
+      "textChars": 3908,
+      "portrait": true
+    },
+    {
+      "name": "Raven Malve",
+      "textChars": 3777,
+      "portrait": true
+    },
+    {
+      "name": "Rhaelya Lander",
+      "textChars": 5374,
+      "portrait": true
+    },
+    {
+      "name": "Rhea Charakterbeschreibung final",
+      "textChars": 2126,
+      "portrait": true
+    },
+    {
+      "name": "Rose",
+      "textChars": 3136,
+      "portrait": true
+    },
+    {
+      "name": "Runa Kell",
+      "textChars": 3852,
+      "portrait": true
+    },
+    {
+      "name": "Ryhell",
+      "textChars": 2896,
+      "portrait": true
+    },
+    {
+      "name": "Samantha Nowak",
+      "textChars": 4976,
+      "portrait": true
+    },
+    {
+      "name": "Sano Black",
+      "textChars": 4071,
+      "portrait": true
+    },
+    {
+      "name": "Saphira Charakterbeschreibung",
+      "textChars": 3447,
+      "portrait": true
+    },
+    {
+      "name": "Sasha Reds",
+      "textChars": 2655,
+      "portrait": true
+    },
+    {
+      "name": "Saskia Fresse Stil Gewalt",
+      "textChars": 3002,
+      "portrait": true
+    },
+    {
+      "name": "Scarlet Crow",
+      "textChars": 4289,
+      "portrait": true
+    },
+    {
+      "name": "Selene Noctis",
+      "textChars": 3245,
+      "portrait": true
+    },
+    {
+      "name": "Selina",
+      "textChars": 2537,
+      "portrait": true
+    },
+    {
+      "name": "Sera Yeal",
+      "textChars": 4324,
+      "portrait": true
+    },
+    {
+      "name": "Seralyth A’Nerai",
+      "textChars": 2843,
+      "portrait": true
+    },
+    {
+      "name": "Seraphyne Althéa",
+      "textChars": 3157,
+      "portrait": true
+    },
+    {
+      "name": "Serin Vale",
+      "textChars": 3690,
+      "portrait": true
+    },
+    {
+      "name": "Seris Morningstar",
+      "textChars": 4519,
+      "portrait": true
+    },
+    {
+      "name": "Shavra",
+      "textChars": 3799,
+      "portrait": true
+    },
+    {
+      "name": "Shego Tobea",
+      "textChars": 3100,
+      "portrait": true
+    },
+    {
+      "name": "Silvia Hopps",
+      "textChars": 4944,
+      "portrait": true
+    },
+    {
+      "name": "Sina El-Haven",
+      "textChars": 2979,
+      "portrait": true
+    },
+    {
+      "name": "Soraya Azarin",
+      "textChars": 2770,
+      "portrait": true
+    },
+    {
+      "name": "Susan Sun",
+      "textChars": 4911,
+      "portrait": true
+    },
+    {
+      "name": "Svala Karras",
+      "textChars": 4649,
+      "portrait": true
+    },
+    {
+      "name": "Sybil Moray",
+      "textChars": 4903,
+      "portrait": true
+    },
+    {
+      "name": "Sylara Frost",
+      "textChars": 3829,
+      "portrait": true
+    },
+    {
+      "name": "Sytharia – Göttin der Verderbnis, Unterwerfung und männlichen Besessenheit",
+      "textChars": 1505,
+      "portrait": true
+    },
+    {
+      "name": "Talia Charakterprofil",
+      "textChars": 3619,
+      "portrait": true
+    },
+    {
+      "name": "Timue Raskyr",
+      "textChars": 3396,
+      "portrait": true
+    },
+    {
+      "name": "Valeria Hexpaw",
+      "textChars": 4595,
+      "portrait": true
+    },
+    {
+      "name": "Vanessa Nachtpfote",
+      "textChars": 4090,
+      "portrait": true
+    },
+    {
+      "name": "Veska Skye",
+      "textChars": 2380,
+      "portrait": true
+    },
+    {
+      "name": "Vexxa Shade",
+      "textChars": 2010,
+      "portrait": true
+    },
+    {
+      "name": "Veyra Blaze",
+      "textChars": 2501,
+      "portrait": true
+    },
+    {
+      "name": "Veyra Nask",
+      "textChars": 5908,
+      "portrait": true
+    },
+    {
+      "name": "Violetty Pera",
+      "textChars": 4723,
+      "portrait": true
+    },
+    {
+      "name": "Wanda Kaelryn",
+      "textChars": 3828,
+      "portrait": true
+    },
+    {
+      "name": "Xavier Palmer",
+      "textChars": 3919,
+      "portrait": true
+    },
+    {
+      "name": "Zyra Kaelith",
+      "textChars": 2521,
+      "portrait": true
+    }
+  ]
+}

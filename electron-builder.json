@@ -1,0 +1,11 @@
+{
+ "appId":"de.horeis.lorevia.community",
+ "productName":"Lorevia Community",
+ "directories":{"app":"app","output":"dist"},
+ "files":["out/**","assets/**","charaktere/**","licenses/**","usage-public.pem","package.json"],
+ "asarUnpack":["assets/icon.*"],
+ "electronLanguages":["de","en-US"],
+ "compression":"maximum",
+ "win":{"target":[{"target":"nsis","arch":["x64"]}],"icon":"app/assets/icon.ico","signAndEditExecutable":false},
+ "nsis":{"artifactName":"Lorevia-Community-Setup-${version}.exe","oneClick":false,"perMachine":false,"allowElevation":false,"allowToChangeInstallationDirectory":true,"createDesktopShortcut":true,"createStartMenuShortcut":true,"shortcutName":"Lorevia Community","deleteAppDataOnUninstall":false,"runAfterFinish":false,"installerLanguages":["de_DE"],"language":"1031"}
+}

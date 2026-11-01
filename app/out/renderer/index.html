@@ -1,0 +1,929 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; media-src 'self' blob: data:">
+<title>Lorevia Community · 0.5.0</title>
+<link rel="icon" type="image/png" href="./assets/icon-64-GDbaWqjU.png">
+  <script type="module" crossorigin src="./assets/index-BHsq9ODR.js"></script>
+  <link rel="stylesheet" crossorigin href="./assets/index-Da0alt-C.css">
+<link rel="stylesheet" href="./assets/lorevia-ergaenzungen.css"><link rel="stylesheet" href="./assets/public-editor.css"></head>
+<body class="stimmen-aus">
+
+
+<div class="download update-banner" id="updateBanner" role="status" aria-live="polite" hidden>
+  <span class="dl-icon"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+  <div class="dl-info">
+    <div class="dl-zeile"><span class="dl-titel" id="updTitel">Hole neue Version …</span><span class="dl-prozent" id="updProzent">0 %</span></div>
+    <div class="dl-balken" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="updBalken"><i></i></div>
+    <div class="upd-schritte" id="updSchritte"><span data-phase="holen">1 · Holen</span><span data-phase="pruefen">2 · Prüfen</span><span data-phase="installieren">3 · Installieren</span></div>
+    <div class="dl-detail" id="updDetail">&nbsp;</div>
+  </div>
+  <button class="dl-zu" type="button" id="updZu" aria-label="Schließen" title="Schließen" hidden>×</button>
+</div>
+
+
+<div id="coverSplash" class="cover-splash" aria-hidden="true">
+  <img src="./assets/splash-16x9-a96h6b8e.jpg" alt="Lorevia" class="cover-splash-img">
+  <p class="cover-splash-text" id="coverSplashText"></p>
+</div>
+
+
+<div class="app-shell">
+<aside class="sidebar" id="sidebar" aria-label="Hauptmenü">
+  <div class="sb-brand">
+    <img src="./assets/icon-64-GDbaWqjU.png" alt="" class="sb-icon">
+    <span class="sb-name">Lorevia</span>
+  </div>
+  <nav class="sb-nav">
+    <button class="sb-item" type="button" data-go="start" data-nav="start"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M3 11 12 4l9 7M5 10v10h5v-6h4v6h5V10" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Startseite</span></button>
+    <button class="sb-item" type="button" data-go="geschichten" data-nav="geschichten"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M3 5.5C5 4.5 8 4.5 12 6c4-1.5 7-1.5 9-.5V19c-2-1-5-1-9 .5-4-1.5-7-1.5-9-.5zM12 6v13.5" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Meine Geschichten</span></button>
+    <button class="sb-item" type="button" data-go="figuren" data-nav="figuren"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M9 11a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7zM2.5 20c.6-3.6 3.2-6 6.5-6s5.9 2.4 6.5 6M16 4.3a3.5 3.5 0 0 1 0 6.4M18 14.4c2 .8 3.2 2.8 3.5 5.6" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Figuren</span></button>
+    <button class="sb-item" type="button" data-go="schreiben" data-nav="schreiben"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M4 20h4L19.5 8.5a2.1 2.1 0 0 0-3-3L5 17v3zM14.5 7.5l3 3" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Schreiben</span></button>
+    <span class="sb-trenner" aria-hidden="true"></span>
+    <button class="sb-item" type="button" id="regelnBtn" aria-controls="regelnPanel" aria-expanded="false"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M4 6h10M18 6h2M4 12h4M12 12h8M4 18h12M20 18h0M16 4v4M10 10v4M18 16v4" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Regeln</span></button>
+    <button class="sb-item" type="button" data-fehler id="fehlerMelden"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M12 3 2 20h20L12 3zM12 10v4.5M12 17.5v.01" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Fehler melden</span></button>
+  </nav>
+  <div class="sb-fuss">
+
+    <span class="sb-version">Version <span id="versionLabel" title="Installierte Version">0.4.11</span></span>
+    <button class="sb-update update-btn" id="updateBtn" type="button" title="Nach Updates suchen (Desktop\Lorevia\Installer)">
+      <svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.3-5.7M20 4v5h-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Update
+    </button>
+  </div>
+</aside>
+
+<div class="main-col">
+
+<header class="flowbar">
+  <nav class="steps" id="steps" aria-label="Schritte">
+    <button data-go="intro" class="step">1 · Intro</button>
+    <button data-go="figuren" class="step">2 · Figuren</button>
+    <button data-go="welt" class="step">3 · Welt</button>
+    <button data-go="fragen" class="step">4 · Offene Fragen</button>
+    <button data-go="uebersicht" class="step">5 · Zusammenfassung</button>
+    <button data-go="schreiben" class="step">6 · Schreiben</button>
+  </nav>
+  <button class="btn ghost small fs-btn" id="vollbild" type="button" title="Vollbild an/aus (F11, Esc verlässt)">Vollbild verlassen</button>
+</header>
+
+<main>
+
+
+<section id="geschichten" class="screen">
+  <div class="page geschichten-page">
+    <div class="geschichten-kopf">
+      <div>
+        <h1>Meine Geschichten</h1>
+        <p class="lead">Weiterschreiben oder neu starten.</p>
+      </div>
+      <div class="geschichten-kopf-aktionen">
+        <button class="btn ghost small" type="button" id="geschichtenOrdnerBtn" hidden>Speicherordner öffnen</button>
+        <button class="btn primary" type="button" id="neueGeschichte2">Neue Geschichte</button>
+      </div>
+    </div>
+    <div class="geschichten-liste" id="geschichtenListe" aria-live="polite"></div>
+  </div>
+</section>
+
+
+<section id="start" class="screen active">
+  <div class="splash">
+    <img src="./assets/cover-CDxURVLC.jpg" alt="Lorevia Cover" class="cover">
+    <div class="splash-text">
+      <h1>Willkommen bei Lorevia</h1>
+      <p class="lead">Dein KI-gestütztes Storyprogramm.</p>
+      <p>Du spielst deinen Char. Alle anderen Figuren und die Welt übernimmt die KI.</p>
+      <p>Die Geschichte läuft weiter, auch wenn du gerade nichts tippst.</p>
+
+      <div class="ki-start" id="kiStart">
+        <h2>Wichtig: Die KI</h2>
+        <ul>
+          <li>Lorevia braucht <strong>Ollama</strong> (kostenlos) auf deinem PC.</li>
+          <li>Das Modell <strong>qwen3.5:4b</strong> (ca. 3–4 GB) wird <strong>einmalig</strong> heruntergeladen.</li>
+          <li>Ohne Ollama schreibt die App <strong>keine echte Geschichte</strong>.</li>
+          <li>Normalerweise richtet das <strong>Setup</strong> beides ein. Fehlt etwas, macht <strong>„KI einrichten“</strong> es hier nach.</li>
+        </ul>
+        <label class="lv-model-label">Lokales KI-Modell<select id="lvModell"><option value="qwen3.5:2b">Qwen 3.5 2B · Sparmodus, geringere Erzählqualität</option><option value="qwen3.5:4b">Qwen 3.5 4B · Mittel</option><option value="qwen3.5:9b">Qwen 3.5 9B · bessere Erzählqualität, langsamer</option></select></label><p class="ki-start-status" id="kiStartStatus">Prüfe KI …</p>
+        <div class="ki-start-btns">
+          <button class="btn primary" id="kiStartSetup" type="button" hidden>KI einrichten (Ollama + Modell)</button>
+          <button class="btn ghost" id="kiStartDownload" type="button">Ollama-Webseite</button>
+          <button class="btn primary" id="kiStartLaden" type="button" hidden>Modell laden (~3–4 GB)</button>
+          <button class="btn ghost" id="kiStartPruefen" type="button">KI prüfen</button>
+        </div>
+        <div class="progress" id="kiStartProgress" hidden><div id="kiStartBar"></div></div>
+      </div>
+
+      <div class="update-box" id="updateBox" hidden>
+        <p id="updateText">Neue Version verfügbar.</p>
+        <div class="ki-start-btns">
+          <button class="btn primary" id="updateInstall" type="button">Update installieren</button>
+        </div>
+      </div>
+
+      <div class="howto">
+        <h2>So geht’s</h2>
+        <ol>
+          <li><strong>Figuren</strong> anlegen und deinen Char markieren</li>
+          <li><strong>Welt</strong> gestalten: Art, Städte, Beschreibung</li>
+          <li><strong>Intro</strong> schreiben: Welt, Ort, Ausgangslage</li>
+          <li><strong>Offene Fragen</strong> klären</li>
+          <li><strong>Schreiben</strong> und loslegen</li>
+        </ol>
+      </div>
+
+      <button class="btn primary big" data-go="intro">Loslegen</button>
+      <p class="app-version" id="appVersion"></p>
+    </div>
+  </div>
+</section>
+
+
+<section id="figuren" class="screen">
+  <div class="page">
+    <p class="eyebrow">Schritt 2 von 6</p>
+    <h1>Figuren</h1>
+    <p class="lead">Wer spielt in deiner Geschichte mit?</p>
+    <p class="hint">Bis zu <strong>4 Hauptfiguren</strong> (dein Char zählt mit, also du + 3) und <strong>8 Nebenfiguren</strong>. Genau <strong>einer</strong> ist dein Char. Den steuerst nur du, alle anderen übernimmt die KI.</p>
+    <p class="figur-zaehler" id="figurZaehler" aria-live="polite"></p>
+
+
+    <div class="bib-leiste">
+      <div>
+        <strong>Schon fertige Figuren?</strong>
+        <span class="hint-klein">Wähle mitgelieferte Figuren oder erstelle eigene Charaktere. Speichere sie als Vorlage für weitere Geschichten.</span>
+      </div>
+      <div class="bib-knoepfe">
+      <button class="btn primary bib-btn" type="button" id="bibBtn" title="Wiederverwendbare Charaktervorlagen">
+        <svg viewBox="0 0 24 24" width="17" height="17" aria-hidden="true"><path d="M3 6.5A1.5 1.5 0 0 1 4.5 5h4l2 2h9A1.5 1.5 0 0 1 21 8.5v9a1.5 1.5 0 0 1-1.5 1.5h-15A1.5 1.5 0 0 1 3 17.5z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg>
+        Andere Figuren · Charaktere und co
+      </button>
+
+      <button class="btn ghost bib-btn" type="button" id="meinCharBtn" title="Wiederverwendbare Charaktervorlagen">
+        <svg viewBox="0 0 24 24" width="17" height="17" aria-hidden="true"><circle cx="12" cy="8" r="3.6" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M5 20c.8-3.6 3.6-5.5 7-5.5s6.2 1.9 7 5.5" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
+        Eigene Vorlagen
+      </button>
+      </div>
+    </div>
+
+    <form id="figurForm" class="card form figur-form">
+      <button type="button" class="btn ghost" id="vorlageSpeichern">Als Vorlage speichern</button><p class="form-titel" id="figurFormTitel">Neue Figur</p>
+      <input type="hidden" name="editIndex" value="">
+      <div class="row name-zeile">
+        <label>Name
+          <input name="name" required placeholder="z. B. Raven">
+        </label>
+        <label>Rolle
+          <select name="role">
+            <option>Hauptfigur</option>
+            <option>Nebenfigur</option>
+            <option>Erwähnt / im Hintergrund</option>
+          </select>
+        </label>
+        <label class="farbwahl">Dialogfarbe
+          <span class="farb-feld">
+            <input type="color" name="color" value="#c0392b" title="Farbe, in der die Figur spricht">
+            <span class="farb-probe" id="farbProbe" style="color:#c0392b">„Hallo.“</span>
+          </span>
+        </label>
+      </div>
+      <label class="check">
+        <input type="checkbox" name="isPlayer"> <span>Das ist <strong>mein Char</strong></span>
+      </label>
+
+
+      <div class="uploads">
+        <div class="upload-slot" id="fotoSlot">
+          <div class="upload-kopf">Bild der Figur</div>
+          <div class="foto-rahmen" id="fotoVorschau"><span class="foto-leer">Kein Bild</span></div>
+          <div class="upload-knoepfe">
+            <button class="btn ghost small" type="button" id="fotoWaehlen">Bild wählen</button>
+            <button class="btn ghost small" type="button" id="fotoWeg" hidden>Entfernen</button>
+            <button class="btn ghost small" type="button" id="fotoAusBild" title="Nur Optik aus dem Bild: Aussehen, Haare, Augen, Outfit/Kleidung – Persönlichkeit und Beschreibung bleiben vom Steckbrief/Brief">Aus Bild füllen</button>
+          </div>
+        </div>
+        <div class="upload-slot" id="briefSlot">
+          <div class="upload-kopf">Charakterbrief</div>
+          <div class="brief-feld" id="briefVorschau"><span class="foto-leer">Kein Dokument</span></div>
+          <div class="upload-knoepfe">
+            <button class="btn ghost small" type="button" id="briefWaehlen">Dokument wählen</button>
+            <button class="btn ghost small" type="button" id="briefWeg" hidden>Entfernen</button>
+          </div>
+          <span class="feld-notiz">ODT, Word, PDF oder Text. Die KI liest den Brief als festen Steckbrief.</span>
+        </div>
+      </div>
+
+      <p class="form-hinweis">Alles darunter ist <strong>freiwillig</strong>. Was du ausfüllst, gilt fest. Was leer bleibt, entwickelt sich beim Schreiben und landet im Storyspeicher.</p>
+
+      <fieldset class="gruppe">
+        <legend>Steckbrief</legend>
+        <div class="entscheid-box" id="entscheidForm" aria-live="polite"></div>
+        <div class="row three">
+          <label>Alter <input name="age" placeholder="z. B. 24"></label>
+          <label>Größe <input name="height" placeholder="z. B. 1,78 m"></label>
+          <label>Beruf
+            <input name="job" list="berufVorschlaege" placeholder="z. B. Krankenpflegerin">
+            <datalist id="berufVorschlaege"><option value="keiner"><option value="Schüler/in"><option value="Student/in"><option value="Azubi"></datalist>
+          </label>
+        </div>
+        <label class="check klein"><input type="checkbox" name="noJob"> <span>Kein Beruf</span></label>
+        <div class="row">
+          <label>Wohnsituation
+            <select name="housing">
+              <option value="">keine Angabe</option>
+              <option>allein</option>
+              <option>zu Hause</option>
+              <option>WG</option>
+              <option>sonstiges</option>
+            </select>
+          </label>
+          <label>Eltern / Familie <input name="family" placeholder="z. B. Mutter lebt, Vater unbekannt, ein Bruder"></label>
+        </div>
+
+        <div class="bezug-box" id="bezugBox" data-ki-feld="bezuege">
+          <span class="bezug-titel">Familie &amp; verknüpfte Beziehungen <span class="optional">verlinkt</span></span>
+          <div class="bezug-liste" id="bezugListe"></div>
+          <div class="bezug-neu">
+            <select id="bezugArt" aria-label="Familien-Bezug"></select>
+            <span class="bezug-von">von</span>
+            <input id="bezugZiel" list="bezugZielListe" aria-label="Name (Figur dieser Geschichte oder frei)" placeholder="Name – frei, Figur wählen oder leer"><datalist id="bezugZielListe"></datalist>
+            <button class="btn ghost small" type="button" id="bezugDazu">+ Bezug</button>
+          </div>
+          <span class="feld-notiz">Familie, feste Partnerschaft und verknüpfte Freundschaften, z. B. „Vater von Mika“ – Name frei eintippen oder eine Figur dieser Geschichte wählen (wird verlinkt). Name leer lassen = nur die Rolle, den Namen entscheidet die KI. Gilt fest für die KI (auch fürs Alter: eine Mutter ist deutlich älter als ihr Kind). Freunde &amp; Bekannte stehen im eigenen Feld darunter.</span>
+        </div>
+
+        <div class="row bez-erin-row">
+          <label class="bez-erin">Freunde &amp; Bekannte
+            <textarea name="relationships" rows="3" maxlength="3000" aria-describedby="bezNotiz" placeholder="beste Freundin Mara; Kollege Tom; Ex-Freund Ben"></textarea>
+            <span class="feld-notiz" id="bezNotiz">Weitere Freunde, Partner, Kollegen, Rivalen – frei geschrieben, auch Figuren dieser Geschichte. Keine Familie: die steht oben (verlinkt) bzw. unter Eltern / Familie.</span>
+          </label>
+          <label class="bez-erin">Frühere Erinnerungen
+            <textarea name="memories" rows="3" maxlength="3000" aria-describedby="erinNotiz" placeholder="kennt Vater von …; Kindheit in …"></textarea>
+            <span class="feld-notiz" id="erinNotiz">Was sie aus der Vergangenheit prägt.</span>
+          </label>
+        </div>
+        <label>Aussehen <input name="appearance" placeholder="Haare, Augen, Statur, Kleidung …"></label>
+        <label>Persönlichkeit <textarea name="personality" rows="2" placeholder="Wie ist die Figur? Wie redet sie, was treibt sie an?"></textarea></label>
+        <div class="row sex-skala-row">
+          <label class="sex-skala">Sexualität
+            <select name="sexualityLevel" aria-describedby="sexNotiz">
+              <option value="dezent" selected>dezent</option>
+              <option value="normal">normal</option>
+              <option value="freizuegig">freizügig</option>
+              <option value="explizit">explizit</option>
+              <option value="pervers">pervers</option>
+            </select>
+            <span class="feld-notiz" id="sexNotiz">Steuert, wie freizügig die Figur wirkt. Standard: dezent.</span>
+          </label>
+          <label class="sex-skala">Stil im Bett
+            <select name="bedroomStyle" aria-describedby="bettNotiz">
+              <option value="dominant">dominant</option>
+              <option value="stoehnend-laut">stöhnend-laut</option>
+              <option value="spielerisch-neckend">spielerisch-neckend</option>
+              <option value="zurueckhaltend" selected>zurückhaltend</option>
+              <option value="schuechtern">schüchtern</option>
+            </select>
+            <span class="feld-notiz" id="bettNotiz">Wie die Figur sich im Intimen gibt. Standard: zurückhaltend.</span>
+          </label>
+        </div>
+      </fieldset>
+
+      <fieldset class="gruppe">
+        <legend>Hobbys <span class="zaehler" id="hobbyZaehler">0 / 4</span></legend>
+        <div class="chips" id="hobbyChips" data-max="4" role="group" aria-label="Hobbys, höchstens 4"></div>
+      </fieldset>
+
+      <fieldset class="gruppe">
+        <legend>Charakterzüge <span class="zaehler" id="zugZaehler">0 / 5</span></legend>
+        <div class="chips" id="zugChips" data-max="5" role="group" aria-label="Charakterzüge, höchstens 5"></div>
+      </fieldset>
+
+      <fieldset class="gruppe">
+        <legend>Stimme</legend>
+        <div class="row">
+          <label>Wie klingt die Figur? <input name="voiceDesc" placeholder="z. B. tief, ruhig, leicht heiser"></label>
+        </div>
+
+        <div class="stimm-wahl" id="stimmWahl">
+          <div class="stimm-kopf">
+            <span class="stimm-titel">Vorlese-Stimme <span class="zaehler" id="stimmZahl"></span></span>
+            <span class="stimm-status" id="stimmStatusForm" aria-live="polite"></span>
+          </div>
+          <div class="stimm-filter" id="stimmFilter" role="group" aria-label="Stimmen filtern">
+            <button type="button" class="chip an" data-filter="alle">Alle</button>
+            <button type="button" class="chip" data-filter="w">weiblich</button>
+            <button type="button" class="chip" data-filter="m">männlich</button>
+          </div>
+          <div class="stimm-karten" id="stimmKarten" role="radiogroup" aria-label="Vorlese-Stimme wählen"></div>
+          <input type="hidden" name="voiceId" value="">
+          <span class="feld-notiz">Lokal und kostenlos. „Automatisch“ wählt nach Stimm-Beschreibung. Eigene Stimme aus Hörprobe (XTTS) kommt später. Jederzeit änderbar, auch mitten in der Geschichte.</span>
+        </div>
+      </fieldset>
+
+      <label class="nur-mein" id="bioFeld" hidden>Kurz-Bio „über mich“
+        <textarea name="bio" rows="2" placeholder="Ein paar Sätze über deinen Char, aus deiner Sicht."></textarea>
+      </label>
+      <label>Notizen
+        <textarea name="notes" rows="3" placeholder="Geheimnisse, alles andere …"></textarea>
+      </label>
+
+      <div class="form-actions">
+        <button class="btn primary" type="submit" id="figurSubmit">Figur hinzufügen</button>
+        <button class="btn ghost" type="button" id="figurKiFuellen" title="Offene und „entscheidet die KI“-Felder jetzt von der KI füllen lassen – danach kannst du alles ändern">✦ KI füllt Char</button>
+        <button class="btn ghost" type="button" id="figurAbbrechen" hidden>Abbrechen</button>
+      </div>
+    </form>
+
+    <h2 class="section-title">Deine Figuren</h2>
+    <div id="figurListe" class="figur-liste"></div>
+    <p id="figurLeer" class="empty">Noch keine Figuren. Leg oben die erste an.</p>
+
+    <div class="nav-row">
+      <button class="btn ghost" data-go="intro">Zurück</button>
+      <button class="btn primary" data-go="welt">Weiter zur Welt</button>
+    </div>
+  </div>
+</section>
+
+
+
+<section id="welt" class="screen">
+  <div class="page welt-page">
+    <p class="eyebrow">Schritt 3 von 6</p>
+    <h1>Welt</h1>
+    <p class="lead">In was für einer Welt spielt deine Geschichte?</p>
+    <p class="hint">Wähl aus, was passt, oder schreib einfach frei. Alles ist freiwillig. Was du festlegst, gilt fest wie ein Steckbrief.</p>
+
+    <section class="card welt-karte" aria-labelledby="weltArtTitel">
+      <div class="welt-kopf">
+        <h2 id="weltArtTitel">Weltart</h2>
+        <span class="zaehler" id="weltArtZaehler">0 gewählt</span>
+      </div>
+      <p class="welt-notiz">Mehrere gleichzeitig sind okay, z. B. Fantasy + Antike.</p>
+      <button class="btn ghost" type="button" id="weltKI">✦ KI entscheidet die Weltart</button><p class="hint" id="lvWeltStatus" role="status" aria-live="polite"></p><div class="chips welt-chips" id="weltArten" role="group" aria-label="Weltart, Mehrfachauswahl"></div>
+      <label class="welt-eigen" id="weltEigenFeld" hidden>Eigene Weltart
+        <input id="weltEigen" placeholder="z. B. Steampunk-Inselreich, Märchenwelt mit Technik …">
+      </label>
+    </section>
+
+    <section class="card welt-karte" aria-labelledby="weltStadtTitel">
+      <div class="welt-kopf">
+        <h2 id="weltStadtTitel">Städte</h2>
+        <label class="welt-anzahl">Wie viele?
+          <input type="number" id="weltAnzahl" min="0" max="50" step="1" value="0" inputmode="numeric">
+        </label>
+      </div>
+      <p class="welt-notiz">Trag Namen ein, soweit du sie schon kennst. Fehlende Städte erfindet die KI passend zur Welt.</p>
+      <ol class="stadt-liste" id="stadtListe"></ol>
+      <button class="btn ghost small stadt-neu" type="button" id="stadtNeu">+ Stadt hinzufügen</button>
+    </section>
+
+    <section class="card welt-karte" aria-labelledby="weltTextTitel">
+      <div class="welt-kopf">
+        <h2 id="weltTextTitel"><label for="weltText">Weltbeschreibung</label></h2>
+        <span class="counter welt-counter" id="weltCounter">0 Wörter</span>
+      </div>
+      <textarea id="weltText" class="big-text welt-text" rows="10" placeholder="Erzähl frei von deiner Welt …
+
+Wie sieht sie aus, wer herrscht, was ist besonders?
+
+Gibt es Magie, Technik, Götter, Konflikte?"></textarea>
+      <p class="welt-roh"><svg viewBox="0 0 24 24" width="13" height="13" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+        Dein Text wird vollständig gespeichert. Die Struktur darunter ist nur eine Ergänzung, du kannst sie jederzeit korrigieren.</p>
+
+      <div class="welt-auswerten">
+        <button class="btn ghost" type="button" id="weltAuswerten">
+          <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M12 3l1.8 4.6L18.5 9l-4.7 1.4L12 15l-1.8-4.6L5.5 9l4.7-1.4zM18 15l.9 2.1L21 18l-2.1.9L18 21l-.9-2.1L15 18l2.1-.9z" fill="currentColor"/></svg>
+          <span>Struktur vorschlagen</span>
+        </button>
+        <span class="welt-notiz" id="weltAuswertenNotiz">Die KI liest deinen Text und zieht Fakten heraus. Nichts wird gelöscht.</span>
+      </div>
+
+      <div class="fakten-block" id="faktenBlock" hidden>
+        <div class="welt-kopf">
+          <h3>Erkannte Fakten <span class="zaehler" id="faktenZaehler"></span></h3>
+          <button class="zs-link" type="button" id="faktNeu">+ Fakt hinzufügen</button>
+        </div>
+        <p class="welt-notiz">Klick auf einen Fakt, um ihn zu ändern. × entfernt ihn, dein Text bleibt unverändert.</p>
+        <div class="fakten" id="faktenListe"></div>
+      </div>
+    </section>
+
+    <div class="nav-row">
+      <button class="btn ghost" type="button" data-go="figuren">Zurück</button>
+      <button class="btn primary" type="button" id="weltWeiter">Weiter zu den Fragen</button>
+    </div>
+  </div>
+</section>
+
+
+<section id="intro" class="screen">
+  <div class="page">
+    <p class="eyebrow">Schritt 1 von 6</p>
+    <h1>Intro</h1>
+    <p class="lead">Wo beginnt deine Geschichte?</p>
+    <p class="hint">Beschreib die Welt, den Ort und die Lage. Kurz oder lang, ganz wie du willst. Die KI liest das als Grundlage.</p>
+
+    <textarea id="introText" class="big-text" rows="14" placeholder="Die Welt, in der alles spielt …
+
+Wo sind die Figuren gerade?
+
+Was ist kurz vorher passiert?"></textarea>
+    <p class="counter" id="introCounter">0 Wörter</p>
+    <button type="button" class="btn ghost" id="introKI">✦ KI entscheidet / ergänzt</button>
+    <label class="lv-entry-option"><input type="checkbox" id="spielerSpaeter"> Meine Figur tritt erst später auf</label>
+    <p class="hint">Die anderen beginnen ohne dich. Mit deiner ersten Handlung oder „Jetzt auftreten“ holst du deine Figur dazu.</p>
+    <p class="hint" id="lvIntroKnown"></p><p class="hint" id="lvSetupStatus" role="status" aria-live="polite"></p>
+
+    <div class="nav-row">
+      <button class="btn ghost" data-go="start">Zurück</button>
+      <button class="btn primary" data-go="figuren">Weiter zu den Figuren</button>
+    </div>
+  </div>
+</section>
+
+
+<section id="fragen" class="screen">
+  <div class="page">
+    <p class="eyebrow">Schritt 4 von 6</p>
+    <h1>Offene Fragen</h1>
+    <p class="lead">Ein paar Dinge, damit die Welt rund wird.</p>
+    <p class="hint">Hak ab, was geklärt ist. Antworten sind freiwillig, helfen der KI aber sehr.</p>
+
+    <button class="btn ghost" type="button" id="fragenUebernehmen">Aus Welt &amp; Intro übernehmen</button><p class="hint" id="lvFragenStatus" role="status" aria-live="polite"></p><div id="fragenListe" class="fragen"></div>
+
+    <div class="nav-row">
+      <button class="btn ghost" data-go="welt">Zurück</button>
+      <button class="btn primary" data-go="uebersicht">Weiter zur Zusammenfassung</button>
+    </div>
+  </div>
+</section>
+
+
+<section id="uebersicht" class="screen">
+  <div class="page breit zs-page">
+    <div class="zs-kopf">
+      <div>
+        <p class="eyebrow">Schritt 5 von 6 · Vor dem Start</p>
+        <h1>Zusammenfassung</h1>
+        <p class="lead">Alles bereit? Ein letzter Blick, bevor deine Geschichte beginnt.</p>
+      </div>
+      <div class="zs-limits" id="zsLimits" aria-live="polite"></div>
+    </div>
+    <p class="zs-warnung" id="zsWarnung" hidden></p>
+
+    <section class="card zs-karte zs-figurenkarte" aria-labelledby="zsFigTitel">
+      <div class="zs-karte-kopf">
+        <h2 id="zsFigTitel">Dein Char &amp; Hauptfiguren</h2>
+        <button class="zs-link" type="button" data-go="figuren">Figuren bearbeiten</button>
+      </div>
+      <div class="zs-figuren-reihe">
+        <div id="zsSpieler" class="zs-inhalt"></div>
+        <div id="zsHaupt" class="zs-inhalt"></div>
+      </div>
+      <p class="zs-neben" id="zsNeben"></p>
+    </section>
+
+
+    <section class="card zs-karte zs-stimmen" aria-labelledby="zsStimmTitel">
+      <div class="zs-karte-kopf">
+        <h2 id="zsStimmTitel">Stimmen <span class="zaehler" id="zsStimmZahl"></span></h2>
+        <span class="stimm-status" id="stimmStatusZs"></span>
+      </div>
+      <div id="zsStimmen" class="stimm-zuordnung"></div>
+    </section>
+
+    <div class="zs-grid">
+      <div class="zs-spalte">
+        <section class="card zs-karte zs-setting" aria-labelledby="zsSettingTitel">
+          <div class="zs-karte-kopf">
+            <h2 id="zsSettingTitel">Setting · Intro</h2>
+            <button class="zs-link" type="button" data-go="intro">bearbeiten</button>
+          </div>
+          <div id="zsSetting" class="zs-prosa"></div>
+        </section>
+
+        <section class="card zs-karte zs-regelkarte" aria-labelledby="zsRegelnTitel">
+          <div class="zs-karte-kopf">
+            <h2 id="zsRegelnTitel">Aktive Regeln</h2>
+            <button class="zs-link" type="button" id="zsRegelnBtn">Regeln ändern</button>
+          </div>
+          <div id="zsRegeln" class="zs-regeln"></div>
+          <p class="zs-aus" id="zsRegelnAus"></p>
+        </section>
+      </div>
+
+      <div class="zs-spalte">
+        <section class="card zs-karte" aria-labelledby="zsFragenTitel">
+          <div class="zs-karte-kopf">
+            <h2 id="zsFragenTitel">Offene Fragen <span class="zaehler" id="zsFragenZaehler"></span></h2>
+            <button class="zs-link" type="button" data-go="fragen">bearbeiten</button>
+          </div>
+          <ul id="zsFragen" class="zs-fragen"></ul>
+        </section>
+
+        <section class="card zs-karte zs-welt" aria-labelledby="zsWeltTitel">
+          <div class="zs-karte-kopf">
+            <h2 id="zsWeltTitel">Welt</h2>
+            <button class="zs-link" type="button" data-go="welt">bearbeiten</button>
+          </div>
+          <div id="zsWelt"></div>
+        </section>
+      </div>
+    </div>
+
+    <div class="zs-start">
+      <div class="zs-start-links">
+        <button class="btn ghost" type="button" data-go="fragen">Zurück</button>
+        <span class="zs-start-hinweis">Alles bleibt änderbar, auch mitten in der Geschichte.</span>
+      </div>
+      <button class="btn primary big zs-start-btn" type="button" id="geschichteStarten">
+        <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M12 3l1.8 4.6L18.5 9l-4.7 1.4L12 15l-1.8-4.6L5.5 9l4.7-1.4zM18 15l.9 2.1L21 18l-2.1.9L18 21l-.9-2.1L15 18l2.1-.9z" fill="currentColor"/></svg>
+        <span>Geschichte starten</span>
+      </button>
+    </div>
+  </div>
+</section>
+
+
+<section id="schreiben" class="screen"><div id="spielerEinstieg" class="lv-entry-banner" hidden><span>Deine Figur ist noch nicht in der Szene.</span> <button class="btn primary small" id="spielerJetzt" type="button">Jetzt auftreten</button></div>
+  <div class="write-layout">
+    <aside class="side">
+      <h2>Figuren</h2>
+      <ul id="sideFiguren" class="side-figuren"></ul>
+      <button class="btn ghost small side-neu" type="button" data-go="figuren" title="Zu den Figuren wechseln. Deine Geschichte bleibt erhalten.">+ Figur hinzufügen</button>
+      <h2>Storyspeicher</h2>
+      <div class="side-box">
+        <button class="btn ghost small" id="speicherOeffnen" type="button">Storyspeicher / Welt</button>
+        <p class="side-small" id="speicherKurz"></p>
+      </div>
+      <h2 id="auswertungTitel">Gesprochenes</h2>
+      <div class="side-box" id="auswertungBox">
+        <button class="btn ghost small" id="auswertungOeffnen" type="button">Gesprochenes auswerten</button>
+        <p class="side-small">Absicht, Ton, Widerspruch, Lüge, Unterton. Oder schreib: „werte das Gesprochene aus“.</p>
+      </div>
+      <h2>Regeln</h2>
+      <div class="side-box">
+        <button class="btn ghost small" id="regelnOeffnen" type="button">Regel-Schalter</button>
+        <p class="side-small" id="regelnKurz"></p>
+      </div>
+      <h2>Übertragen</h2>
+      <div class="side-box">
+        <button class="btn ghost small" id="exportieren" type="button">Exportieren</button>
+        <button class="btn ghost small" id="importieren" type="button">Importieren</button>
+        <button class="btn ghost small" id="textKopieren" type="button">Text kopieren</button>
+        <p class="side-small" id="transferInfo"></p>
+      </div>
+      <h2>Welt</h2>
+      <div class="side-box">
+        <button class="btn ghost small" id="weltPause" type="button">Pause</button>
+        <button class="btn ghost small" id="weltJetzt" type="button">Jetzt weiter</button>
+      </div>
+      <h2>Korrektur</h2>
+      <div class="side-box">
+        <button class="btn ghost small" data-korr="splitte" type="button">Splitte</button>
+        <button class="btn ghost small" data-korr="kürzer" type="button">Kürzer</button>
+        <button class="btn ghost small" data-korr="mehr Eigenständigkeit" type="button">Mehr Eigenständigkeit</button>
+        <p class="side-small" id="korrGemerkt"></p>
+      </div>
+      <h2 id="stimmenTitel">Stimmen</h2>
+      <div class="side-box stimmen-box" id="stimmenBox">
+        <p class="side-small" id="stimmenStatus">Stimmen sind aus.</p>
+        <button class="btn primary small" id="stimmenSchalter" type="button" aria-pressed="false">Stimmen an</button>
+        <button class="btn ghost small" id="stimmenStopp" type="button" hidden>Jetzt still</button>
+        <label class="side-small stimmen-modus">Vorlesen:
+          <select id="stimmenModus">
+            <option value="alles">Erzählung + Gesprochenes</option>
+            <option value="dialog">nur Gesprochenes</option>
+          </select>
+        </label>
+        <div class="progress" id="stimmenProgress" hidden><div id="stimmenBar"></div></div>
+      </div>
+      <h2>KI</h2>
+      <div class="side-box" id="kiBox">
+        <p class="side-small" id="kiStatus">Prüfe KI …</p>
+        <button class="btn primary small" id="kiLaden" type="button" hidden>Modell laden (~3–4 GB)</button>
+        <button class="btn primary small" id="kiSetup" type="button" hidden>KI einrichten</button>
+        <button class="btn ghost small" id="kiDownload" type="button" hidden>Ollama-Webseite</button>
+        <button class="btn ghost small" id="kiNeu" type="button">Neu prüfen</button>
+        <div class="progress" id="kiProgress" hidden><div id="kiBar"></div></div>
+      </div>
+      <h2>Stil</h2>
+      <ul class="side-notes">
+        <li>Kurze Absätze</li>
+        <li><strong>Gesprochenes fett</strong></li>
+        <li>Jede Figur spricht in ihrer Farbe</li>
+        <li>Dein Char immer im Du</li>
+      </ul>
+      <button class="btn ghost small" id="ordnerOeffnen" type="button" hidden>Speicherordner öffnen</button>
+      <button class="btn ghost small" id="neueGeschichte" type="button">Neue Geschichte</button>
+    </aside>
+
+    <div class="story-wrap">
+
+      <div class="story-leiste">
+        <div class="legende" id="dialogLegende" aria-label="Dialogfarben"></div>
+        <label class="leiste-knopf leiste-stimmen" title="Vorlese-Stimmen an oder aus">
+          <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9H4zM16.5 8.5a5 5 0 0 1 0 7M19 6a8.5 8.5 0 0 1 0 12" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Stimmen
+          <input type="checkbox" class="schalter" id="stimmenLeiste" role="switch">
+          <span class="stimm-lesen" id="stimmLesen" hidden>lesen</span>
+        </label>
+        <button class="leiste-knopf" type="button" id="stimmZuBtn" aria-expanded="false" aria-controls="stimmPop" title="Welche Figur spricht mit welcher Stimme">
+          <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><circle cx="9" cy="8" r="3.2" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M3.5 19c.6-3.2 2.8-5 5.5-5s4.9 1.8 5.5 5M17 8.5a3.5 3.5 0 0 1 0 5M19.5 6.5a6.5 6.5 0 0 1 0 9" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
+          Zuordnen
+        </button>
+        <div class="hg-pop stimm-pop" id="stimmPop" hidden>
+          <h3>Stimmen der Figuren</h3>
+          <p class="stimm-status" id="stimmStatusPop"></p>
+          <div id="stimmPopListe" class="stimm-zuordnung kompakt"></div>
+        </div>
+        <button class="leiste-knopf" type="button" id="hgBtn" aria-expanded="false" aria-controls="hgPop" title="Hintergrund beim Schreiben">
+          <span class="hg-vorschau"></span> Hintergrund
+        </button>
+        <div class="hg-pop" id="hgPop" hidden>
+          <h3>Schreib-Hintergrund</h3>
+          <div class="hg-presets" id="hgPresets"></div>
+          <label class="hg-eigen">Eigene Farbe <input type="color" id="hgEigen" value="#fbf6ea"></label>
+          <p class="hg-hinweis">Dialogfarben werden bei Bedarf automatisch etwas angepasst, damit alles gut lesbar bleibt.</p>
+        </div>
+      </div>
+
+      <div class="download" id="downloadBanner" role="status" aria-live="polite" hidden>
+        <span class="dl-icon"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        <div class="dl-info">
+          <div class="dl-zeile"><span class="dl-titel" id="dlTitel">Stimmen werden geladen …</span><span class="dl-prozent" id="dlProzent">0 %</span></div>
+          <div class="dl-balken" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="dlBalken"><i></i></div>
+          <div class="dl-detail" id="dlDetail">&nbsp;</div>
+        </div>
+        <button class="dl-zu" type="button" id="dlZu" aria-label="Ausblenden" title="Ausblenden (lädt im Hintergrund weiter)">×</button>
+      </div>
+      <article id="story" class="story" aria-live="polite"></article>
+
+      <div class="composer">
+        <div class="idle" id="idle">
+          <span class="dot"></span>
+          <span id="idleText">Die Welt läuft in 45 Sekunden weiter, wenn du nichts tippst.</span>
+        </div>
+
+        <div class="anhang-leiste" id="anhangLeiste" aria-label="Angehängte Dateien" hidden></div>
+        <p class="anhang-hinweis" id="anhangHinweis" hidden></p>
+        <textarea id="eingabe" rows="3" placeholder="Was machst du? Schreib im Du: Du gehst zur Tür … oder in Anführungszeichen, was du sagst."></textarea>
+        <div class="composer-row">
+          <div class="composer-tools">
+            <button class="btn ghost small anhang-btn" id="anhangBtn" type="button" title="Foto oder Dokument einfügen (jpg, png, webp, gif, pdf, txt, md, docx) – auch Hineinziehen oder Strg+V">
+              <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M16.5 6.5 8.6 14.4a2 2 0 1 0 2.8 2.8l8-8a4 4 0 0 0-5.7-5.7l-8.2 8.2a6 6 0 0 0 8.5 8.5l7-7" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              Foto oder Dokument
+            </button>
+            <button class="btn ghost small anhang-btn lied-btn" id="liedBtn" type="button" title="YouTube-Lied mit Titel einfügen">
+              <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M9 18V5l11-2v13" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><circle cx="6" cy="18" r="3" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="17" cy="16" r="3" fill="none" stroke="currentColor" stroke-width="1.8"/></svg>
+              Lied einfügen
+            </button>
+
+            <button class="btn ghost small anhang-btn raum-btn" id="raumBtn" type="button" title="Raum setzen (Bezeichnung + Bild)">
+              <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M3 11.5 12 4l9 7.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M5.5 10v10h13V10" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M10 20v-5.5h4V20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>
+              Raum
+            </button>
+            <button class="btn ghost small anhang-btn outfit-btn" id="outfitBtn" type="button" title="Outfit setzen (Figur + Bezeichnung + Bild)">
+              <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M9 3.5 4 6 2.5 11l3.5 1.2V20.5h12V12.2l3.5-1.2L20 6l-5-2.5c-.4 1.5-1.6 2.5-3 2.5s-2.6-1-3-2.5Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>
+              Outfit
+            </button>
+            <button class="btn ghost small fehler-btn" data-fehler type="button" title="Etwas läuft falsch? Hier melden.">Fehler melden</button>
+            <span class="tip">Enter senden · Shift+Enter neue Zeile · "Text in Anführungszeichen" wird Dialog</span>
+          </div>
+          <button class="btn primary" id="senden">Senden</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+</div>
+</div>
+
+
+
+<div class="modal-hg" id="bibModal" hidden>
+  <div class="modal bib-modal" role="dialog" aria-modal="true" aria-labelledby="bibTitel">
+    <div class="panel-kopf">
+      <h2 id="bibTitel">Charakter-Bibliothek</h2>
+      <button class="schliessen" type="button" data-schliessen="bib" aria-label="Schließen">×</button>
+    </div>
+    <div class="bib-ordnerzeile"><p class="hint bib-ordner" id="bibOrdner">Charakter-Ordner</p>
+      <div class="bib-ordner-aktionen" id="bibOrdnerAktionen">
+        <span class="bib-zaehler" id="bibZaehler"></span>
+        <button class="btn ghost small" type="button" data-bib="neu">Neu einlesen</button>
+      </div></div>
+    <input type="search" id="bibSuche" placeholder="Figur suchen …" aria-label="Figur suchen">
+    <div class="bib-liste" id="bibListe"></div>
+    <div class="form-actions rechts">
+      <button class="btn ghost" type="button" data-schliessen="bib">Schließen</button>
+    </div>
+  </div>
+</div>
+
+
+<div class="overlay" id="regelnOverlay" hidden></div>
+<aside class="panel" id="regelnPanel" aria-label="Regeln" aria-hidden="true">
+  <div class="panel-kopf">
+    <h2>Regeln</h2>
+    <button class="schliessen" type="button" data-schliessen="regeln" aria-label="Schließen">×</button>
+  </div>
+  <p class="hint">So schreibt die KI deine Geschichte. Gilt sofort, auch mitten in der Geschichte.</p>
+  <h3 class="panel-titel">Einstellbar</h3>
+  <div id="regelnSchalter" class="regeln"></div>
+  <h3 class="panel-titel">Immer an</h3>
+  <div id="regelnFest" class="regeln fest"></div>
+</aside>
+
+
+<div class="modal-hg" id="fehlerModal" hidden>
+  <form class="modal" id="fehlerForm" role="dialog" aria-modal="true" aria-labelledby="fehlerTitel">
+    <div class="panel-kopf">
+      <h2 id="fehlerTitel">Fehler melden</h2>
+      <button class="schliessen" type="button" data-schliessen="fehler" aria-label="Schließen">×</button>
+    </div>
+    <p class="hint">Was ist passiert? Ein Satz reicht. Der Bericht wird mit Uhrzeit, Version und Bildschirmfoto automatisch gespeichert (Desktop\Lorevia\Fehlerberichte).</p>
+    <label>Art
+      <select name="art">
+        <option value="ki-weicht-ab">KI weicht ab</option>
+        <option value="reagiert-nicht">KI reagiert nicht</option>
+        <option value="regelbruch">Regelbruch</option>
+        <option value="anzeige">Anzeige / Darstellung</option>
+        <option value="sonstiges">Sonstiges</option>
+      </select>
+    </label>
+    <label>Beschreibung
+      <textarea name="text" rows="4" placeholder="z. B. Joran hat für mich gesprochen, obwohl ich meinen Char steuere."></textarea>
+    </label>
+    <label class="check"><input type="checkbox" name="mitStory" checked> <span>Bildschirmfoto und Ausschnitt der Geschichte mitschicken</span></label>
+    <img id="fehlerVorschau" class="fehler-vorschau" alt="Vorschau des Bildschirmfotos" hidden>
+    <div class="snapshot" id="fehlerSnapshot" aria-label="Vorschau des Ausschnitts"></div>
+    <p class="hint klein" id="fehlerStatus" aria-live="polite"></p>
+    <div class="form-actions rechts">
+      <button class="btn ghost" type="button" id="fehlerOrdner" hidden>Ordner öffnen</button>
+      <button class="btn ghost" type="button" data-schliessen="fehler">Abbrechen</button>
+      <button class="btn primary" type="submit" id="fehlerSpeichern">Bericht speichern</button>
+    </div>
+  </form>
+</div>
+
+
+
+<div class="modal-hg" id="liedModal" hidden>
+  <form class="modal lied-modal" id="liedForm" role="dialog" aria-modal="true" aria-labelledby="liedTitel" novalidate>
+    <div class="panel-kopf">
+      <h2 id="liedTitel">Lied einfügen</h2>
+      <button class="schliessen" type="button" data-lied-zu aria-label="Schließen">×</button>
+    </div>
+    <p class="hint">Ein YouTube-Lied in die Geschichte legen. Singt jemand, kennt die KI so Titel und Stelle.</p>
+    <label>Titel <span class="pflicht">Pflicht</span>
+      <input name="title" type="text" maxlength="120" placeholder="z. B. Hallelujah – Leonard Cohen" autocomplete="off">
+    </label>
+    <label>YouTube-Link <span class="pflicht">Pflicht</span>
+      <input name="url" type="url" inputmode="url" placeholder="https://www.youtube.com/watch?v=… oder https://youtu.be/…" autocomplete="off">
+    </label>
+    <label>Text / Bezug <span class="optional">optional</span>
+      <textarea name="text" rows="3" maxlength="800" placeholder="Songtext-Stelle oder warum das Lied passt"></textarea>
+    </label>
+    <p class="lied-fehler" id="liedFehler" role="alert" hidden></p>
+    <div class="form-actions rechts">
+      <button class="btn ghost" type="button" data-lied-zu>Abbrechen</button>
+      <button class="btn primary" type="submit">Einfügen</button>
+    </div>
+  </form>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+
+
+
+<dialog id="aussehenDialog" class="speicher-dialog">
+  <form method="dialog" class="speicher-form" id="aussehenForm">
+    <h2>Haare &amp; Augen</h2>
+    <p class="hint">Haare und Augen einer Figur fest vorgeben – die KI übernimmt das genau so. Outfit und Raum setzt du unten beim Schreiben mit „Outfit“ bzw. „Raum“ (Bezeichnung + Bild).</p>
+    <label class="feld">Figur<select id="aussehenFigur"></select></label>
+    <p class="hint-klein" id="aussehenOutfit"></p>
+    <div class="speicher-grid">
+      <label class="feld">Haare (fest)<input id="aussehenHaare" maxlength="120" placeholder="z. B. kurz, platinblond"></label>
+      <label class="feld">Augen (fest)<input id="aussehenAugen" maxlength="120" placeholder="z. B. grün"></label>
+    </div>
+    <div class="speicher-btns">
+      <button class="btn ghost" value="cancel" type="submit">Abbrechen</button>
+      <button class="btn primary" value="ok" type="submit">Übernehmen</button>
+    </div>
+  </form>
+</dialog>
+
+
+<div class="modal-hg" id="raumModal" hidden>
+  <form class="modal lied-modal ro-modal" id="raumForm" role="dialog" aria-modal="true" aria-labelledby="raumTitel" novalidate>
+    <div class="panel-kopf">
+      <h2 id="raumTitel">Raum</h2>
+      <button class="schliessen" type="button" data-raum-zu aria-label="Schließen">×</button>
+    </div>
+    <p class="hint">Kurz sagen, wo ihr seid, und ein Bild vom Raum dazulegen — die KI erkennt die Details aus dem Bild.</p>
+    <label>Bezeichnung <span class="pflicht">Pflicht</span>
+      <input name="name" type="text" maxlength="40" placeholder="z. B. Wohnzimmer, mein Zimmer" autocomplete="off">
+    </label>
+    <div class="ro-feld">
+      <span class="ro-label">Raum-Bild <span class="pflicht">Pflicht</span></span>
+      <div class="ro-bild gross breit" id="raumBildSlot">
+        <div class="ro-vorschau" id="raumBildVorschau"><span class="foto-leer">Kein Bild</span></div>
+        <div class="ro-bild-aktionen">
+          <button class="btn ghost small" type="button" id="raumBildWaehlen">Bild wählen</button>
+          <button class="btn ghost small" type="button" id="raumBildWeg" hidden>Entfernen</button>
+          <span class="ro-tipp">Dein Foto vom Zimmer oder Ort. Auch hineinziehen. Die KI erkennt Einrichtung und Stimmung.</span>
+        </div>
+      </div>
+      <input type="file" id="raumBildInput" accept="image/*" hidden>
+    </div>
+    <label>Hinweis <span class="optional">optional</span>
+      <textarea name="text" rows="2" maxlength="300" placeholder="z. B. Kerzenlicht, Fenster gekippt"></textarea>
+    </label>
+    <p class="lied-fehler" id="raumFehler" role="alert" hidden></p>
+    <div class="form-actions rechts">
+      <button class="btn ghost" type="button" data-raum-zu>Abbrechen</button>
+      <button class="btn primary" type="submit" id="raumSubmit">Raum setzen</button>
+    </div>
+  </form>
+</div>
+
+
+<div class="modal-hg" id="outfitModal" hidden>
+  <form class="modal lied-modal ro-modal" id="outfitForm" role="dialog" aria-modal="true" aria-labelledby="outfitTitel" novalidate>
+    <div class="panel-kopf">
+      <h2 id="outfitTitel">Outfit</h2>
+      <button class="schliessen" type="button" data-outfit-zu aria-label="Schließen">×</button>
+    </div>
+    <p class="hint">Figur wählen, kurz sagen, was sie trägt, und ein Outfit-Bild dazulegen — die KI erkennt die Kleidung.</p>
+    <label>Figur <span class="pflicht">Pflicht</span>
+      <select name="figur" id="outfitFigur"></select>
+    </label>
+    <p class="ro-leer" id="outfitKeineFiguren" hidden>Noch keine Figuren angelegt. Lege zuerst unter „Figuren“ eine an.</p>
+    <label class="ro-bez">Bezeichnung <span class="pflicht">Pflicht</span>
+      <input name="name" type="text" maxlength="40" placeholder="z. B. Abendkleid, Schlafzeug" autocomplete="off">
+    </label>
+    <div class="ro-feld">
+      <span class="ro-label">Outfit-Bild <span class="pflicht">Pflicht</span></span>
+      <div class="ro-bild gross" id="outfitBildSlot">
+        <div class="ro-vorschau" id="outfitBildVorschau"><span class="foto-leer">Kein Bild</span></div>
+        <div class="ro-bild-aktionen">
+          <button class="btn ghost small" type="button" id="outfitBildWaehlen">Bild wählen</button>
+          <button class="btn ghost small" type="button" id="outfitBildWeg" hidden>Entfernen</button>
+          <span class="ro-tipp">Dein eigenes Foto oder Bild. Auch hineinziehen. Die KI erkennt die Kleidung.</span>
+        </div>
+      </div>
+      <input type="file" id="outfitBildInput" accept="image/*" hidden>
+    </div>
+    <p class="lied-fehler" id="outfitFehler" role="alert" hidden></p>
+    <div class="form-actions rechts">
+      <button class="btn ghost" type="button" data-outfit-zu>Abbrechen</button>
+      <button class="btn primary" type="submit" id="outfitSubmit">Outfit setzen</button>
+    </div>
+  </form>
+</div>
+<dialog id="speicherDialog" class="speicher-dialog">
+  <form method="dialog" class="speicher-form">
+    <h2>Storyspeicher / Welt</h2>
+    <p class="hint">Das merkt sich Lorevia über deine Geschichte. Die KI muss sich daran halten. Du kannst alles ändern – deine Änderungen sind fest.</p>
+    <div id="speicherInhalt"></div>
+    <div class="speicher-btns">
+      <button class="btn ghost" value="cancel" type="submit">Abbrechen</button>
+      <button class="btn primary" id="speicherSichern" value="ok" type="submit">Speichern</button>
+    </div>
+  </form>
+</dialog>
+
+
+
+
+
+
+<dialog id="auswertungDialog" class="speicher-dialog auswertung-dialog">
+  <form method="dialog" class="speicher-form">
+    <h2>Gesprochenes auswerten</h2>
+    <p class="hint">Was die anderen Figuren gesagt haben: Absicht, Ton, Widerspruch, Lüge, Unterton – kurz und klar. Wird im Storyspeicher gemerkt.</p>
+    <div class="auswertung-leiste">
+      <label>Bereich
+        <select id="auswertungUmfang">
+          <option value="1">letzter Abschnitt</option>
+          <option value="3" selected>letzte 3 Abschnitte</option>
+          <option value="6">letzte 6 Abschnitte</option>
+        </select>
+      </label>
+      <button class="btn primary small" id="auswertungStart" type="button">Auswerten</button>
+      <span class="side-small" id="auswertungStatus"></span>
+    </div>
+    <div id="auswertungInhalt"></div>
+    <div class="speicher-btns">
+      <button class="btn ghost" value="close" type="submit">Schließen</button>
+    </div>
+  </form>
+</dialog>
+
+</body>
+</html>
