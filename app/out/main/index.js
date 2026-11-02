@@ -250,7 +250,7 @@ function lvIsEntryInput(text) {
   if (/^(?:das\s+)?(?:entscheidest du|entscheide du|du entscheidest|ki entscheidet)[.!]?$/i.test(t)) return false;
   return true;
 }
-function lvStoryJson(raw) {
+function lvStoryJson(raw, story = {}) {
   var parsed = JSON.parse(String(raw).replace(/^```(?:json)?\s*|\s*```$/g,''));
   if (!Array.isArray(parsed.blocks) || !parsed.blocks.length || parsed.blocks.length > 12) throw new Error('Ungültige Geschichte');
   var sections = [];
@@ -259,7 +259,8 @@ function lvStoryJson(raw) {
       var hasAttribution=block.parts.some(p=>p.type==='action'&&block.parts.some(s=>s.who&&p.text?.includes(s.who)));
       var parts=block.parts.map(function(part){if(!part||typeof part.text!=='string')return '';var value=part.text.trim().replace(/\*+/g,'');if(value.length>900)throw new Error('Absatzteil zu lang');if(part.type==='speech'||part.type==='whisper'){var rendered=(part.type==='speech'?'**':'*')+'„'+value.replace(/^[„“"»]+|[„“"«]+$/g,'')+'“'+(part.type==='speech'?'**':'*');return !hasAttribution&&part.who?part.who+' sagt: '+rendered:rendered;}if(part.type==='thought')return '*'+value+'*';return part.type==='action'?value:'';}).filter(Boolean);
       if(parts.length)sections.push(parts.join(' '));
-      if(parsed.warteAufSpieler===true&&block.parts.some(p=>['speech','whisper'].includes(p.type)))break;
+      var question=block.parts.find(p=>['speech','whisper'].includes(p.type)&&/\?[“"»«]?$/.test(p.text.trim())&&/\b(?:du|dir|dich|dein|darf ich|kann ich|soll ich)\b/i.test(p.text));
+      if(parsed.warteAufSpieler===true&&question&&!story.ausgestaltung)break;
       continue;
     }
     if (!block || typeof block.text !== 'string' || !block.text.trim()) continue;
@@ -497,6 +498,7 @@ function lvEpicScope(raw){
   var combat=/kämpf|kampf|waffe|pistole|gewehr|angreif|angriff|schlag|schläg|schieß|schieße|lege?\s+(?:ich\s+)?los|leg(?:e)?\s+los|hieb|tritt|trete|klinge|schwert/i.test(input.storyText);
   return request&&combat&&input.storyText?{art:'kampf',einmalig:true,handlung:input.storyText.slice(0,2500)}:null;
 }
+function lvPersistentDirections(directions){return (directions||[]).filter(text=>!/^\s*(?:bitte\s+)?(?:beschreib(?:e)?|erzähl(?:e)?)\s+(?:es|das|die\s+(?:kampf)?szene)\s+episch\b/i.test(text));}
 function lvScopePrompt(story){
   if(!story.ausgestaltung)return 'SPIELERKONTROLLE: Keine neuen Spielerhandlungen, Worte, Gedanken, Gefühle oder Entscheidungen. Nur die anderen Figuren fortführen.';
   return 'EINMALIGE FREIGABE FÜR DIESE KAMPFSZENE: Der Spieler erlaubt zusätzliche körperliche Kampfhandlungen seiner Figur innerhalb der begonnenen Auseinandersetzung. Alle diese Handlungen zwingend in Du-Form: Du weichst aus, du parierst. Niemals den Spielernamen, er oder seine als Erzählperspektive der Spielerfigur verwenden. Gestalte Bewegungen, sichtbare Abläufe, Folgen und Reaktionen anschaulich aus. Seine ausdrücklich genannten Grenzen gelten. Keine neuen Dialoge, Gedanken, Gefühle, Ziele, Ortsreisen oder Entscheidungen seiner Figur erfinden. Vor einem neuen Konflikt, Gegnerangebot oder einer notwendigen Entscheidung anhalten. Keine automatische Freigabe im nächsten Zug oder beim Welt-Takt.';
@@ -517,7 +519,7 @@ function lvNarrativeSchema(story){
  return {type:'object',properties:{blocks:{type:'array',minItems:1,maxItems:10,items:{type:'object',properties:{type:{type:'string',enum:['paragraph']},parts:{type:'array',minItems:1,maxItems:4,items:{anyOf:[action,speech]}}},required:['type','parts'],additionalProperties:false}},warteAufSpieler:{type:'boolean'},entscheidung:LV_STORY_SCHEMA.properties.entscheidung},required:['blocks','warteAufSpieler'],additionalProperties:false};
 }
 function lvStructureInstruction(story,decision){
- return 'Gib nur JSON nach dem Schema aus. blocks enthält Absätze. Jeder Absatz besteht ausschließlich aus type: paragraph und parts. In parts gehören erzählte Handlungen in type: action mit text; jeder gesprochene Satz gehört getrennt in type: speech oder whisper mit who und text. who ist der tatsächliche NPC-Name, kein Textbestandteil. Keine Rede in action-Teilen verstecken. Keine zusätzlichen Feldnamen im Text. Verbinde kurze Handlung und passende Rede innerhalb desselben Absatzes. Wenn der Spieler reagieren muss, warteAufSpieler: true und nach dem ersten an ihn gerichteten Redebeitrag enden. '+lvScopePrompt(story)+(decision?' Die tatsächlich getroffene NPC-Entscheidung zusätzlich in entscheidung mit wer, was und warum.':'');
+ return 'Gib nur JSON nach dem Schema aus. blocks enthält Absätze. Jeder Absatz besteht ausschließlich aus type: paragraph und parts. In parts gehören erzählte Handlungen in type: action mit text; jeder gesprochene Satz gehört getrennt in type: speech oder whisper mit who und text. who ist der tatsächliche NPC-Name, kein Textbestandteil. Keine Rede in action-Teilen verstecken. Keine zusätzlichen Feldnamen im Text. Verbinde kurze Handlung und passende Rede innerhalb desselben Absatzes. Die Szene darf mehrere NPC-Dialogwechsel enthalten. Wenn der Spieler am Ende reagieren muss, warteAufSpieler: true; seine Reaktion nicht vorwegnehmen. '+lvScopePrompt(story)+(decision?' Die tatsächlich getroffene NPC-Entscheidung zusätzlich in entscheidung mit wer, was und warum.':'');
 }
 function lvNarrativeSystem(story){
   var chars=story.characters||[],p=chars.find(c=>c.isPlayer),present=new Set(story.status?.present||chars.filter(c=>!c.isPlayer).map(c=>c.name));
@@ -4437,7 +4439,7 @@ async function generate(story, mode, playerInput = '', model = DEFAULT_MODEL, ex
   for (let attempt = 0; attempt <= MAX_RETRIES; attempt++) {
     const res = await client.chat({ model, messages, think: false, stream: false, format: structured ? lvNarrativeSchema(story) : undefined, options: { ...MODEL_OPTIONS, ...(structured ? {presence_penalty:0.2,temperature:0.6,num_ctx:12288,num_predict:story.ausgestaltung?2000:1300} : {}) } })
     let raw = String(res.message?.content || '').replace(/<think>[\s\S]*?<\/think>/g, '');
-    if (structured) { try { lvAssertNarrativeSpeakers(raw,story); raw = lvStoryJson(raw); } catch { raw = ''; } }
+    if (structured) { try { lvAssertNarrativeSpeakers(raw,story); raw = lvStoryJson(raw,story); } catch { raw = ''; } }
     const warteAufSpieler = raw.includes('[[WARTE_AUF_SPIELER]]'); raw = raw.replaceAll('[[WARTE_AUF_SPIELER]]', '');
     const marker = parseDecisionMarker(raw)
     const cleaned = lvRemovePlayerNarration(autoFix(marker.text), story, {mode:ctxMode,playerInput:mode==='player'?playerInput:''});
@@ -4601,11 +4603,11 @@ async function continueStory(ctx, model = DEFAULT_MODEL, opts = {}) {
   const ausgestaltung=lvEpicScope(ctx.eingabe||'');
  const date=lvStoryDate(ctx);
  const input = lvSplitInput(ctx.eingabe || '');
-  const regie = lvMergeDirections(ctx.speicher && ctx.speicher.regie,ctx.regie,input.directions);
+  const regie = lvMergeDirections(lvPersistentDirections(lvMergeDirections(ctx.speicher && ctx.speicher.regie,ctx.regie)),input.directions);
   let text = input.storyText;
   if (!text) { const command=input.directions.find(x=>/^(?:bitte )?(?:kürzer(?: bitte)?|splitt?e(?: bitte)?|mehr eigenständigkeit)[.!]?$/i.test(x)); if(command)text=command; }
   const result=await lvBaseContinueStory({...ctx,ausgestaltung,eingabe:text,regie,speicher:{...(ctx.speicher || {}),regie}},model,opts);
-  result.speicher.regie=regie;
+  result.speicher.regie=lvPersistentDirections(regie);
  if(date){result.speicher.szene.datum=date.iso;if(!date.alreadyShown)result.blocks.unshift({type:'action',text:'**'+date.label+'**',datum:date.iso});}
   return result;
 }

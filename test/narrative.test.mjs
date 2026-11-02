@@ -30,6 +30,11 @@ test('Neue Absatzblöcke verbinden Erzählung und fett zitierte Rede',()=>{
  assert.equal(text,'Mara legt den Löffel ab. **„Das war knapp.“**');assert.equal(api.autoFix(text),text);
  assert.ok(api.checkOutput(text,{characters:[{name:'Mara'}],status:{present:['Mara']}},{mode:'tick'}).ok);
 });
+test('Normale NPC-Dialogwechsel werden nicht nach der ersten Aussage abgeschnitten',()=>{
+ const raw=JSON.stringify({blocks:[{type:'paragraph',parts:[{type:'speech',who:'Mara',text:'Das ist unser normaler Morgen.'}]},{type:'paragraph',parts:[{type:'speech',who:'Jona',text:'Dann brauche ich wohl noch Kaffee.'}]}],warteAufSpieler:true});
+ assert.match(api.lvStoryJson(raw),/noch Kaffee/);
+ const question=JSON.stringify({blocks:[{type:'paragraph',parts:[{type:'speech',who:'Mara',text:'Darf ich reinkommen?'}]},{type:'paragraph',parts:[{type:'action',text:'Mara öffnet ungefragt die Tür.'}]}],warteAufSpieler:true});assert.doesNotMatch(api.lvStoryJson(question),/öffnet/);
+});
 test('Strukturierte Spielerrede wird auch bei Kampffreigabe abgewiesen',()=>{
  assert.throws(()=>api.lvAssertNarrativeSpeakers(JSON.stringify({blocks:[{type:'paragraph',parts:[{type:'speech',who:'Spieler',text:'Ich gewinne.'}]}]}),{characters:[{name:'Spieler',isPlayer:true}],ausgestaltung:{art:'kampf'}}),/Spielerfigur/);
 });
