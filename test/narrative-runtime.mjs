@@ -12,7 +12,7 @@ export function loadRuntime(file = 'app/out/main/index.js') {
   const handlers = new Map();
   const context = vm.createContext({
     require(name) {
-      if (name === 'electron') return { app:{getPath:()=>dir,setName(){},setPath(){},getAppPath:()=>resolve('app'),getVersion:()=> '0.5.1'}, ipcMain:{handle:(key,fn)=>handlers.set(key,fn)} };
+      if (name === 'electron') return { app:{getPath:()=>dir,setName(){},setPath(){},getAppPath:()=>resolve('app'),getVersion:()=> '0.5.2'}, ipcMain:{handle:(key,fn)=>handlers.set(key,fn)} };
       return require(name);
     },
     process, console, Buffer, URL, setTimeout, clearTimeout, setInterval, clearInterval,
@@ -23,7 +23,8 @@ export function loadRuntime(file = 'app/out/main/index.js') {
     freeStoryId,saveStory,loadStory,normalizeMemory,checkContinuity,
     setClient(value){client=value;},setOptions(value){Object.assign(MODEL_OPTIONS,value);},
     ...(typeof lvResolveSetup === 'function' ? {lvResolveSetup,lvIncoming,lvWithRelations,lvInverse,lvCleanSetup,lvAbsentViolations,lvSetupMessages,lvGroundAnswers,lvStoryJson,lvIsEntryInput,lvSplitInput,lvMergeDirections,lvStylePrompt,lvOwnedNames,lvToDuNarration,lvOwnInputBlocks}: {}),
-    ...(typeof lvContinuation==='function'?{lvContinuation,lvContinuationPrompt,lvEpicScope,lvStoryDate,autoFix,lvAssertNarrativeSpeakers,buildPackage,importFile,readZip,writeZip,normalizeFigur}: {})
+    ...(typeof lvContinuation==='function'?{lvContinuation,lvContinuationPrompt,lvEpicScope,lvStoryDate,autoFix,lvAssertNarrativeSpeakers,buildPackage,importFile,readZip,writeZip,normalizeFigur}: {}),
+    ...(typeof lvDraftIssues==='function'?{lvDraftIssues,lvFormatDraft,lvLengthPrompt}: {})
   })`,context);
   return { api, context, dir, handlers };
 }

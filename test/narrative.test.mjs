@@ -3,6 +3,67 @@ import assert from 'node:assert/strict';
 import {loadRuntime,plain} from './narrative-runtime.mjs';
 const {api}=loadRuntime();
 const figuren=[{name:'Spieler',mein:true},{name:'Mara',persoenlichkeit:'Direkt und trocken.'}];
+
+test('Neue Fließtextabsätze behalten Rede und Zuschreibung gemeinsam',()=>{
+ const raw=JSON.stringify({blocks:[{type:'paragraph',text:'Mara legt die Tasse ab. **„Das war knapp.“** Sie schiebt den Stuhl zurück.'}],warteAufSpieler:true});
+ const text=api.lvFormatDraft(api.lvStoryJson(raw));
+ assert.match(text,/Tasse ab\. \*\*„Das war knapp\.“\*\* Sie schiebt/);
+ assert.equal(text.split('\n\n').length,2); // Absatz plus internes Wartesignal
+ assert.equal(api.lvDraftIssues(text.replace('[[WARTE_AUF_SPIELER]]','').trim(),{}).length,0);
+});
+
+test('Dialogtypografie schließt Rede und erhält tatsächliches Flüstern',()=>{
+ assert.equal(api.lvFormatDraft('Mara sagt: **Das war knapp.**'),'Mara sagt: **„Das war knapp.“**');
+ assert.equal(api.lvFormatDraft('Mara sagt: *„Das war knapp.*'),'Mara sagt: **„Das war knapp.“**');
+ assert.equal(api.lvFormatDraft('Flüsternd sagt Mara: *„Leise.*'),'Flüsternd sagt Mara: *„Leise.“*');
+ assert.equal(api.lvFormatDraft('Mara sagt: „Guten Morgen.“'),'Mara sagt: **„Guten Morgen.“**');
+ assert.equal(api.lvFormatDraft('Mara ruft: ***„Halt!“***'),'Mara ruft: **„Halt!“**');
+ assert.equal(api.lvFormatDraft('*Was soll das?* fragt Mara.'),'**„Was soll das?“** fragt Mara.');
+ assert.equal(api.lvFormatDraft('*Was soll das?* denkt Mara.'),'*Was soll das?* denkt Mara.');
+ assert.equal(api.lvFormatDraft('Du weicht aus. Mara sagt: **„Du geht ist falsch.“**'),'Du weichst aus. Mara sagt: **„Du geht ist falsch.“**');
+});
+
+test('Formatabweichungen und technische Felder gelangen nicht in die Geschichte',()=>{
+ assert.ok(api.lvDraftIssues('Mara sagt: **„Unvollständig.**',{}).some(v=>v.code==='sprache'));
+ assert.throws(()=>api.lvAssertNarrativeSpeakers(JSON.stringify({blocks:[{type:'paragraph',text:'warteAufSpieler: true'}]}),{}),/technische Feldnamen/);
+});
+
+test('Terminschutz erkennt falsche Uhrzeit, lässt Alltagsuhrzeit und neue Vereinbarung zu',()=>{
+ const story={fortsetzung:{termine:[{wann:'2025-03-04 10:30',was:'Klinik',status:'vereinbart'}]}};
+ assert.ok(api.lvDraftIssues('Mara sagt: **„Der Termin ist um zehn Uhr morgens.“**',story).some(v=>v.code==='termin'));
+ assert.equal(api.lvDraftIssues('Mara sagt: **„Der Termin ist um 10:30 Uhr.“**',story).length,0);
+ assert.equal(api.lvDraftIssues('Die Uhr zeigt 09:00 Uhr.',story).length,0);
+ assert.equal(api.lvDraftIssues('Mara sagt: **„Der Termin ist um 11:00 Uhr.“**',{...story,currentPlayerInput:'Ich verschiebe den Termin auf 11:00 Uhr.'}).length,0);
+ assert.equal(api.lvDraftIssues('Der Termin ist um 11:00 Uhr.',{fortsetzung:{termine:[{wann:'10:30',was:'Klinik'},{wann:'11:00',was:'Besprechung'}]}}).length,0);
+});
+
+test('Fehlerhafter kompletter Absatz wird neu erzeugt statt teilweise herausgeschnitten',async()=>{
+ let count=0;api.setClient({chat:async()=>({message:{content:JSON.stringify({blocks:[{type:'paragraph',text:count++===0?'Mara legt die Tasse ab. Du gehst zum Fenster. **„Es regnet.“**':'Mara legt die Tasse ab. **„Es regnet.“**'}],warteAufSpieler:true})}})});
+ const result=await api.continueStory({figuren,trigger:'user',eingabe:'Ich warte.'},'qwen3.5:35b-a3b',{extract:false});
+ assert.equal(count,2);assert.equal(result.attempts,2);assert.equal(result.verworfen.length,0);
+ assert.ok(result.blocks.some(b=>b.text.includes('Tasse ab. **„Es regnet.“**')));
+});
+
+test('Abgebrochene Sätze werden als Entwurf verworfen und durch vollständige Absätze ersetzt',async()=>{
+ let count=0;api.setClient({chat:async()=>({message:{content:JSON.stringify({blocks:[{type:'paragraph',text:count++===0?'Mara legt die Tasse ab und':'Mara legt die Tasse ab.'}],warteAufSpieler:true})}})});
+ const result=await api.continueStory({figuren,trigger:'user',eingabe:'Ich warte.'},'qwen3.5:35b-a3b',{extract:false});assert.equal(count,2);assert.ok(result.blocks.some(b=>b.text==='Mara legt die Tasse ab.'));
+});
+
+test('Terminkorrektur wird vor der Übernahme angefordert',async()=>{
+ let count=0;api.setClient({chat:async()=>({message:{content:JSON.stringify({blocks:[{type:'paragraph',text:count++===0?'Mara sagt: **„Der Termin ist um 10:00 Uhr.“**':'Mara sagt: **„Der Termin ist um 10:30 Uhr.“**'}],warteAufSpieler:true})}})});
+ const result=await api.continueStory({figuren,trigger:'user',eingabe:'Ich warte.',speicher:{fortsetzung:{termine:[{wann:'10:30',was:'Klinik',status:'vereinbart'}]}}},'qwen3.5:35b-a3b',{extract:false});assert.equal(count,2);assert.ok(result.blocks.some(b=>b.text.includes('10:30')));
+});
+
+test('Ausführlichkeit bleibt im Spielstand erhalten und ändert die Schreibvorgabe',()=>{
+ assert.equal(api.lvContinuation({umfang:'ausfuehrlich'}).umfang,'ausfuehrlich');assert.equal(api.lvContinuation({umfang:'ungültig'}).umfang,'normal');
+ const story=api.ctxToStory({figuren,speicher:{fortsetzung:{umfang:'kurz'}}});assert.match(api.buildSystemPrompt(story),/60–140/);assert.doesNotMatch(api.buildSystemPrompt(story),/Nora hält|Jona schiebt/);
+});
+
+test('Kampffreigabe erlaubt auch nachgestellte Spielerbefehle nicht',()=>{
+ const story={characters:[{name:'Spieler',isPlayer:true},{name:'Mara'}],ausgestaltung:{art:'kampf'}};
+ assert.ok(!api.checkOutput('**„Hände hoch!“** befiehlst du.',story,{mode:'player'}).ok);
+ assert.ok(api.lvDraftIssues('Du weicht dem Schlag aus.',story).some(v=>v.code==='sprache'));
+});
 test('Kampf-Ausgestaltung braucht aktuelle Regie und eine aktuelle Kampfhandlung',()=>{
  assert.equal(api.lvEpicScope('Ich trinke Tee. (Beschreibe es episch.)'),null);
  assert.equal(api.lvEpicScope('(Beschreibe es episch.)'),null);

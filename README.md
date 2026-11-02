@@ -13,6 +13,10 @@ Die Freischaltung und deine Daten bleiben auf deinem PC. Community und die bishe
 
 ## Erzählen und Fortsetzen ab 0.5.1
 
+Ab **0.5.2** öffnet **Geschichte & Erzählweise** einen Dialog mit getrennten Reitern für Handlung, Figurenwissen, offene Fragen und Termine. Die Erzählweise **Kurz**, **Ausgewogen** oder **Ausführlich** gilt pro Geschichte und bleibt beim Export erhalten. Du musst nicht alle Felder ausfüllen. „Abbrechen“ und Schließen übernehmen keine Änderungen.
+
+Bei größeren Modellen werden fehlerhafte Absätze vollständig neu angefordert, statt einzelne Sätze aus einem Entwurf zu schneiden. Einige eindeutige Format-, Grammatik- und Terminfehler werden zusätzlich erkannt. Das ist keine vollständige inhaltliche Prüfung. Falls die Fortsetzung verworfen wird, kannst du sie mit **Fortsetzung erneut versuchen** erneut anfordern; deine eigene Eingabe wird nicht doppelt gespeichert. Nach zwischenzeitlichen Änderungen wird eine alte Anfrage nicht wiederholt.
+
 - Handlung und NPC-Rede können gemeinsam in einem lesbaren Absatz stehen. Die Spielerfigur bleibt in Du-Form; gesprochene Worte werden fett und Flüstern kursiv dargestellt.
 - Unter **Fortsetzungsstand** stehen bestätigte Tatsachen, Aussagen, Wissensgrenzen, offene Fragen, Termine und Importlücken getrennt. Diese Angaben lassen sich bearbeiten und bleiben beim Export erhalten. Ein vorgemerkter Test ist kein vorweggenommenes Ergebnis.
 - Eine aktuelle Kampfhandlung mit der Regie **(Beschreibe es episch)** erlaubt zusätzliche körperliche Kampfhandlungen innerhalb dieser einen Szene. Eigene Worte, Gedanken, Gefühle, neue Ziele und Entscheidungen der Spielerfigur bleiben geschützt. Im nächsten Zug oder beim automatischen Welt-Takt gilt diese Freigabe nicht weiter.

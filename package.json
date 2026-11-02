@@ -1,6 +1,6 @@
 {
   "name": "lorevia-community-build",
-  "version": "0.5.1",
+  "version": "0.5.2",
   "private": true,
   "description": "Build der öffentlichen Lorevia Community Windows-App",
   "author": "Christian Horeis",

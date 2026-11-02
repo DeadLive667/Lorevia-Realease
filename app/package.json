@@ -1,7 +1,7 @@
 {
   "name": "lorevia-community",
   "productName": "Lorevia Community",
-  "version": "0.5.1",
+  "version": "0.5.2",
   "description": "Lokales Rollenspiel mit Charakterbibliothek und Charakterersteller",
   "main": "./out/main/index.js",
   "author": "Christian Horeis",

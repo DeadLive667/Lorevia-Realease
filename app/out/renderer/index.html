@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; media-src 'self' blob: data:">
-<title>Lorevia Community · 0.5.1</title>
+<title>Lorevia Community · 0.5.2</title>
 <link rel="icon" type="image/png" href="./assets/icon-64-GDbaWqjU.png">
   <script type="module" crossorigin src="./assets/index-BHsq9ODR.js"></script>
   <link rel="stylesheet" crossorigin href="./assets/index-Da0alt-C.css">
@@ -47,7 +47,7 @@
   </nav>
   <div class="sb-fuss">
 
-    <span class="sb-version">Version <span id="versionLabel" title="Installierte Version">0.4.12</span></span>
+    <span class="sb-version">Version <span id="versionLabel" title="Installierte Version">0.5.2</span></span>
     <button class="sb-update update-btn" id="updateBtn" type="button" title="Nach Updates suchen (Desktop\Lorevia\Installer)">
       <svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.3-5.7M20 4v5h-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
       Update
@@ -548,7 +548,7 @@ Was ist kurz vorher passiert?"></textarea>
 </section>
 
 
-<section id="schreiben" class="screen"><div id="lvContinuityBar" class="lv-continuity-bar"><button type="button" class="btn ghost small">Fortsetzungsstand</button><span data-continuation-status></span><small>„Beschreibe es episch“ in aktueller Kampf-Regie erlaubt die Ausgestaltung dieser einen Kampfszene.</small></div><div id="spielerEinstieg" class="lv-entry-banner" hidden><span>Deine Figur ist noch nicht in der Szene.</span> <button class="btn primary small" id="spielerJetzt" type="button">Jetzt auftreten</button></div>
+<section id="schreiben" class="screen"><div id="lvContinuityBar" class="lv-continuity-bar"><button type="button" class="btn ghost small">Geschichte &amp; Erzählweise</button><span data-continuation-status></span></div><div id="spielerEinstieg" class="lv-entry-banner" hidden><span>Deine Figur ist noch nicht in der Szene.</span> <button class="btn primary small" id="spielerJetzt" type="button">Jetzt auftreten</button></div>
   <div class="write-layout">
     <aside class="side">
       <h2>Figuren</h2>
@@ -663,14 +663,14 @@ Was ist kurz vorher passiert?"></textarea>
       <article id="story" class="story" aria-live="polite"></article>
 
       <div class="composer">
-        <div class="idle" id="idle">
+        <div class="idle" id="idle"><button type="button" id="lvRetryReply" class="btn ghost small" hidden>Fortsetzung erneut versuchen</button>
           <span class="dot"></span>
           <span id="idleText">Die Welt läuft in 45 Sekunden weiter, wenn du nichts tippst.</span>
         </div>
 
         <div class="anhang-leiste" id="anhangLeiste" aria-label="Angehängte Dateien" hidden></div>
         <p class="anhang-hinweis" id="anhangHinweis" hidden></p>
-        <textarea id="eingabe" rows="3" placeholder="Was machst du? Schreib im Du: Du gehst zur Tür … oder in Anführungszeichen, was du sagst."></textarea>
+        <textarea id="eingabe" rows="3" placeholder="Was tust oder sagst du? Zum Beispiel: Ich öffne die Tür und sage: „Guten Morgen.“ Regie schreibst du in (Klammern)."></textarea>
         <div class="composer-row">
           <div class="composer-tools">
             <button class="btn ghost small anhang-btn" id="anhangBtn" type="button" title="Foto oder Dokument einfügen (jpg, png, webp, gif, pdf, txt, md, docx) – auch Hineinziehen oder Strg+V">

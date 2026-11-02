@@ -11,3 +11,30 @@
 .lv-model-label select {max-width:100%;font-size:.85rem}
 .lv-continuity-bar{display:flex;align-items:center;gap:12px;flex-wrap:wrap;padding:9px 20px;background:var(--soft,#f2eddf);border-bottom:1px solid #d9d1bf;font-size:11px;color:#59667a}.lv-continuity-bar small{margin-left:auto;max-width:480px;font-size:10px;line-height:1.4}.lv-continuation-dialog{width:min(680px,92vw);max-height:88vh;overflow:auto;border:1px solid #bca981;border-radius:15px;padding:26px;background:#faf7ef;color:#20314c;box-shadow:0 25px 90px #07132366}.lv-continuation-dialog::backdrop{background:#0c1831aa}.lv-continuation-dialog h2{font:500 27px Georgia,serif;margin:0 0 12px}.lv-continuation-dialog p{font-size:12px;line-height:1.6}.lv-continuation-dialog label{display:flex;flex-direction:column;gap:5px;margin:15px 0;font-size:12px}.lv-continuation-dialog textarea,.lv-continuation-dialog input{box-sizing:border-box;width:100%;padding:9px 11px;border:1px solid #c6c6c2;border-radius:7px;background:#fffdf8;color:#24354e;font:13px/1.5 system-ui,sans-serif}.lv-continuation-dialog textarea:focus,.lv-continuation-dialog input:focus{outline:2px solid #a4884d;outline-offset:2px}
 #schreiben.active{display:flex;flex-direction:column}#schreiben>.write-layout{flex:1;min-height:0;height:0}.lv-continuity-bar,.lv-entry-banner{flex:none}
+.lv-continuation-dialog{width:min(800px,94vw);max-height:90vh;padding:0;overflow:hidden}
+.lv-story-settings{display:flex;flex-direction:column;max-height:90vh;margin:0}
+.lv-story-settings-head{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:24px 28px 8px}
+.lv-kicker{font:600 10px/1.4 system-ui,sans-serif;letter-spacing:.13em;color:#806a40}
+.lv-story-settings-head h2{margin:6px 0 0;font-size:27px}
+.lv-dialog-close{width:36px;height:36px;flex:none;border:1px solid #d3cbbd;border-radius:50%;background:#fffcf6;color:#253655;font:26px/1 system-ui;cursor:pointer}
+.lv-settings-intro{margin:4px 28px 16px;color:#5a6573}
+.lv-settings-tabs{display:flex;gap:4px;padding:0 24px;border-bottom:1px solid #ded7c8;flex:none;overflow:auto}
+.lv-settings-tabs button{border:0;border-bottom:3px solid transparent;background:transparent;padding:12px 10px;font:600 12px/1.4 system-ui;color:#5c687a;white-space:nowrap;cursor:pointer}
+.lv-settings-tabs button[aria-selected=true]{color:#243c67;border-bottom-color:#a17d39;background:#efe9da;border-radius:7px 7px 0 0}
+.lv-settings-body{overflow:auto;min-height:0;padding:4px 28px 24px;overscroll-behavior:contain}
+.lv-settings-body [hidden],.lv-settings-body .hint[hidden]{display:none!important}
+.lv-settings-body h3{font:600 16px/1.5 system-ui;margin:20px 0 6px}
+.lv-settings-body label{font-weight:600;font-size:12px}
+.lv-settings-body input,.lv-settings-body textarea,.lv-settings-body select{font-weight:400;font-size:13px;background:#fffdf8;box-sizing:border-box;width:100%;max-width:100%;padding:10px 11px;border:1px solid #c6c6c2;border-radius:7px;color:#24354e}
+.lv-settings-body textarea{resize:vertical;min-height:72px}
+.lv-settings-body .hint{color:#626d7d;font-size:12px;line-height:1.6;margin:6px 0 12px}
+.lv-setting-pair{display:grid;grid-template-columns:1fr 2fr;gap:16px}
+.lv-setting-entry{border:1px solid #ddd4c1;border-radius:10px;background:#f3efe5;margin:14px 0;padding:4px 16px 12px}
+.lv-remove-entry{border:0;background:transparent;text-decoration:underline;text-underline-offset:3px;font:12px/1.5 system-ui;color:#775153;cursor:pointer;padding:5px 0}
+.lv-import-details{margin-top:22px;border-top:1px solid #ddd4c1;padding-top:15px}
+.lv-import-details summary{font-size:12px;cursor:pointer;color:#59667a}
+.lv-settings-footer{display:flex;align-items:center;justify-content:flex-end;gap:10px;padding:16px 28px;border-top:1px solid #ded7c8;background:#f1ebde;flex:none}
+.lv-settings-footer span{margin-right:auto;font-size:11px;color:#626d7d}
+.lv-settings-tabs button:focus-visible,.lv-dialog-close:focus-visible,.lv-remove-entry:focus-visible{outline:2px solid #996f2c;outline-offset:2px}
+#lvRetryReply[hidden]{display:none!important}#lvRetryReply{order:3;margin-left:auto;white-space:normal}.composer .idle{flex-wrap:wrap;gap:8px}
+@media(max-width:600px){.lv-story-settings-head{padding:18px 16px 6px}.lv-story-settings-head h2{font-size:22px}.lv-settings-intro{margin:4px 16px 12px}.lv-settings-tabs{padding:0 12px}.lv-settings-body{padding:4px 16px 18px}.lv-settings-footer{padding:12px 16px}.lv-settings-footer span{display:none}.lv-setting-pair{grid-template-columns:1fr;gap:0}}
