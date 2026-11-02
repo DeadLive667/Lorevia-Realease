@@ -11,6 +11,16 @@ Ein lokales Windows-Programm für interaktive Geschichten. Du steuerst deine Fig
 
 Die Freischaltung und deine Daten bleiben auf deinem PC. Community und die bisherige private Lorevia-Installation verwenden getrennte Datenverzeichnisse. Die Deinstallation löscht deine Geschichten nicht automatisch.
 
+## Erzählen und Fortsetzen ab 0.5.1
+
+- Handlung und NPC-Rede können gemeinsam in einem lesbaren Absatz stehen. Die Spielerfigur bleibt in Du-Form; gesprochene Worte werden fett und Flüstern kursiv dargestellt.
+- Unter **Fortsetzungsstand** stehen bestätigte Tatsachen, Aussagen, Wissensgrenzen, offene Fragen, Termine und Importlücken getrennt. Diese Angaben lassen sich bearbeiten und bleiben beim Export erhalten. Ein vorgemerkter Test ist kein vorweggenommenes Ergebnis.
+- Eine aktuelle Kampfhandlung mit der Regie **(Beschreibe es episch)** erlaubt zusätzliche körperliche Kampfhandlungen innerhalb dieser einen Szene. Eigene Worte, Gedanken, Gefühle, neue Ziele und Entscheidungen der Spielerfigur bleiben geschützt. Im nächsten Zug oder beim automatischen Welt-Takt gilt diese Freigabe nicht weiter.
+- Das Szenendatum wird aus dem Spielstand beziehungsweise einer ausdrücklichen Zeitangabe übernommen. Der nächste Tag wird nicht aus der realen Uhrzeit des PCs abgeleitet.
+- Die optionale zusätzliche Qualitätsprüfung ab 9B lässt einen Entwurf vor dem Übernehmen nochmals auf konkrete Widersprüche prüfen. Sie benötigt weitere Modellaufrufe und kann selbst Fehler machen; sie ist standardmäßig ausgeschaltet. Die normalen Prüfungen bleiben unabhängig davon aktiv.
+
+Die Zielvorlage sind kurze, natürliche Dialoge, eigenständige Figuren, nachvollziehbare Beziehungen und Konsequenzen. Die Umsetzung von Regeln garantiert keine gleichbleibende literarische Qualität jedes lokalen Modells.
+
 ## Charaktere erstellen
 
 - **Einfach:** Eine Beschreibung, ein paar Angaben oder eine der sechs Einstiegsvorlagen reichen. Die KI schlägt Ergänzungen vor. Vor dem Übernehmen kannst du jeden Vorschlag ändern oder abwählen.
@@ -32,6 +42,8 @@ Ob eine externe Bild-KI die Merkmale genau einhält, hängt von ihr ab. Für wie
 ## KI und Hardware
 
 Die App verwendet Ollama, standardmäßig über `http://127.0.0.1:11434`. Für kleinere PCs ist **Qwen 3.5 2B / Sparmodus** voreingestellt. **4B** und **9B** stehen zur Auswahl; das größere Modell erzählt in den bisherigen Tests besser, benötigt aber mehr Rechenleistung und Speicher. Die Modellwahl ändert keine private Lorevia-Installation.
+
+Zusätzlich ist **Qwen 3.5 35B-A3B** als große lokale Alternative auswählbar. Laut [offizieller Modellseite](https://ollama.com/library/qwen3.5:35b-a3b) umfasst der Download rund 22 GB. Das Modell wird getrennt geladen, braucht deutlich mehr Arbeitsspeicher und wird auf schwächeren PCs nicht automatisch ausgewählt. Ein Download allein stellt das aktive Modell nicht um.
 
 32 GB RAM reichen für die vorgesehenen kleinen quantisierten Modelle aus. Auf PCs mit integrierter Grafik ist mit längeren Wartezeiten zu rechnen. Auf dem konkreten Ryzen-5-3400G-PC wurde noch kein Geschwindigkeitstest durchgeführt. Zusätzliche KI-Speicheranalyse ist im Community-Standard ausgeschaltet, um weitere Modellaufrufe zu reduzieren.
 
